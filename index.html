@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Şekilli Nick - Nova Online ⚡️</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@600;700&family=Roboto+Mono:wght@400;700&display=swap');
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a001f, #1a0033, #000814);
+      color: #e0d0ff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 15px;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      margin: 25px 0 10px;
+      background: linear-gradient(90deg, #00d4ff, #ff00d9, #a200ff, #00ffea);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 30px #00d4ff88;
+      animation: neon 4s infinite alternate;
+    }
+
+    @keyframes neon {
+      from { text-shadow: 0 0 15px #00d4ff66, 0 0 30px #ff00d966; }
+      to   { text-shadow: 0 0 40px #a200ff88, 0 0 70px #00ffea66; }
+    }
+
+    .container {
+      background: rgba(10, 5, 30, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      border-radius: 16px;
+      padding: 30px;
+      width: 100%;
+      max-width: 620px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    }
+
+    input {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 1.4rem;
+      background: rgba(20,10,50,0.6);
+      border: 2px solid #444488;
+      border-radius: 10px;
+      color: #e0f0ff;
+      outline: none;
+      font-family: 'Roboto Mono', monospace;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #00d4ff;
+      box-shadow: 0 0 25px rgba(0,212,255,0.45);
+    }
+
+    .output-box {
+      margin: 25px 0;
+      padding: 20px;
+      background: rgba(15,10,40,0.55);
+      border-radius: 12px;
+      min-height: 90px;
+      font-size: 1.5rem;
+      font-family: 'Roboto Mono', monospace;
+      position: relative;
+      word-break: break-all;
+      border: 1px dashed #555;
+    }
+
+    .output-box:empty::before {
+      content: "Nova online şekilli halleri burada görünecek...";
+      color: #777;
+      font-style: italic;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #00d4ff;
+      color: #000;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.25s;
+    }
+
+    .copy-btn:hover {
+      background: #ff00d9;
+      color: white;
+      transform: scale(1.08);
+    }
+
+    .style-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .style-item {
+      background: rgba(30,20,60,0.5);
+      padding: 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.22s;
+      border: 1px solid transparent;
+      text-align: center;
+      font-size: 1.25rem;
+    }
+
+    .style-item:hover {
+      border-color: #00d4ff;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0,212,255,0.3);
+    }
+
+    .style-name {
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>NOVA ONLINE ⚡️</h1>
+
+  <div class="container">
+    <input type="text" id="nick" placeholder="Nick gir (varsayılan: Nova)" value="Nova">
+
+    <div class="output-box" id="result">
+      <button class="copy-btn" id="copyAll">Kopyala</button>
+    </div>
+
+    <div class="style-grid" id="styles"></div>
+  </div>
+
+  <script>
+    const input = document.getElementById('nick');
+    const result = document.getElementById('result');
+    const copyBtn = document.getElementById('copyAll');
+    const stylesContainer = document.getElementById('styles');
+
+    // ────────────────────────────────────────────────
+    //               Şekilli Font / Stil Listesi
+    // ────────────────────────────────────────────────
+    const transformers = [
+      { name: "𝗕𝗼𝗹𝗱",           fn: t => t.split('').map(c => bold[c] || c).join('')           },
+      { name: "𝘀𝗮𝗻𝘀-𝗶𝘁𝗮𝗹𝗶𝗰",    fn: t => t.split('').map(c => italic[c] || c).join('')         },
+      { name: "𝐁𝐨𝐥𝐝 𝐒𝐞𝐫𝐢𝐟",     fn: t => t.split('').map(c => boldSerif[c] || c).join('')       },
+      { name: "𝙼𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎",      fn: t => t.split('').map(c => mono[c] || c).join('')           },
+      { name: "𝒮𝒸𝓇𝒾𝓅𝓉",         fn: t => t.split('').map(c => script[c] || c).join('')         },
+      { name: "𝔉𝔯𝔞𝔨𝔱𝔲𝔯",        fn: t => t.split('').map(c => fraktur[c] || c).join('')       },
+      { name: "𝕯𝖔𝖚𝖇𝖑𝖊 𝕾𝖙𝖗𝖚𝖈𝖐", fn: t => t.split('').map(c => doublestruck[c] || c).join('')  },
+      { name: "ⓒⓘⓡⓒⓛⓔⓓ",          fn: t => t.split('').map(c => circled[c] || c).join('')       },
+      { name: "🅂🅀🅄🄰🅁🄴🄳",       fn: t => t.split('').map(c => squared[c] || c).join('')      },
+      { name: "🆂🅼🅰🅻🅻 🅲🅰🅿🆂",   fn: t => t.split('').map(c => smallcaps[c] || c.toUpperCase()).join('') },
+      { name: "ᔕTᗩᖇᔕ",           fn: t => "✦ " + t.toUpperCase() + " ✦"                         },
+      { name: "N O V A スパーク",   fn: t => t.split('').join(' ') + " スパーク"                   },
+      { name: "N̷O̷V̷A̷",          fn: t => t.split('').map(c => c + '\u0337').join('')          },
+      { name: "N̾O̾V̾A̾",          fn: t => t.split('').map(c => c + '\u033E').join('')          },
+      { name: "N҉O҉V҉A҉",         fn: t => t.split('').map(c => c + '\u0369').join('')          },
+      { name: "N̴O̴V̴A̴",          fn: t => t.split('').map(c => c + '\u0334').join('')          },
+      { name: "N⃣O⃣V⃣A⃣",         fn: t => t.split('').map(c => c + '\u20E3').join('')          },
+      { name: "꧁NOVA꧂",           fn: t => "꧁" + t.toUpperCase() + "꧂"                           },
+      { name: "×͜× NOVA ×͜×",     fn: t => "×͜× " + t.toUpperCase() + " ×͜×"                     },
+      { name: "NOVA ✘",            fn: t => t.toUpperCase() + " ✘"                               },
+      { name: "N O V A ⚡",         fn: t => t.split('').join(' ') + " ⚡"                         },
+      { name: "NOVA 𖤐",           fn: t => t.toUpperCase() + " 𖤐"                               },
+      { name: "𝙽𝚘𝚟𝚊 𝙾𝚗𝚕𝚒𝚗𝚎",     fn: t => t.split('').map(c => fancyA[c] || c).join('') + " 𝙾𝚗𝚕𝚒𝚗𝚎" }
+    ];
+
+    // Unicode haritalar (en çok kullanılanlar)
+    const bold       = {"A":"𝗔","B":"𝗕","C":"𝗖","D":"𝗗","E":"𝗘","F":"𝗙","G":"𝗚","H":"𝗛","I":"𝗜","J":"𝗝","K":"𝗞","L":"𝗟","M":"𝗠","N":"𝗡","O":"𝗢","P":"𝗣","Q":"𝗤","R":"𝗥","S":"𝗦","T":"𝗧","U":"𝗨","V":"𝗩","W":"𝗪","X":"𝗫","Y":"𝗬","Z":"𝗭","a":"𝗮","b":"𝗯","c":"𝗰","d":"𝗱","e":"𝗲","f":"𝗳","g":"𝗴","h":"𝗵","i":"𝗶","j":"𝗷","k":"𝗸","l":"𝗹","m":"𝗺","n":"𝗻","o":"𝗼","p":"𝗽","q":"𝗾","r":"𝗿","s":"𝘀","t":"𝘁","u":"𝘂","v":"𝘃","w":"𝘄","x":"𝘅","y":"𝘆","z":"𝘇"};
+    const italic     = {"A":"𝘈","B":"𝘉","C":"𝘊","D":"𝘋","E":"𝘌","F":"𝘍","G":"𝘎","H":"𝘏","I":"𝘐","J":"𝘑","K":"𝘒","L":"𝘓","M":"𝘔","N":"𝘕","O":"𝘖","P":"𝘗","Q":"𝘘","R":"𝘙","S":"𝘚","T":"𝘛","U":"𝘜","V":"𝘝","W":"𝘞","X":"𝘟","Y":"𝘠","Z":"𝘡","a":"𝘢","b":"𝘣","c":"𝘤","d":"𝘥","e":"𝘦","f":"𝘧","g":"𝘨","h":"𝘩","i":"𝘪","j":"𝘫","k":"𝘬","l":"𝘭","m":"𝘮","n":"𝘯","o":"𝘰","p":"𝘱","q":"𝘲","r":"𝘳","s":"𝘴","t":"𝘵","u":"𝘶","v":"𝘷","w":"𝘸","x":"𝘹","y":"𝘺","z":"𝘻"};
+    const boldSerif  = {"A":"𝐀","B":"𝐁","C":"𝐂","D":"𝐃","E":"𝐄","F":"𝐅","G":"𝐆","H":"𝐇","I":"𝐈","J":"𝐉","K":"𝐊","L":"𝐋","M":"𝐌","N":"𝐍","O":"𝐎","P":"𝐏","Q":"𝐐","R":"𝐑","S":"𝐒","T":"𝐓","U":"𝐔","V":"𝐕","W":"𝐖","X":"𝐗","Y":"𝐘","Z":"𝐙","a":"𝐚","b":"𝐛","c":"𝐜","d":"𝐝","e":"𝐞","f":"𝐟","g":"𝐠","h":"𝐡","i":"𝐢","j":"𝐣","k":"𝐤","l":"𝐥","m":"𝐦","n":"𝐧","o":"𝐨","p":"𝐩","q":"𝐪","r":"𝐫","s":"𝐬","t":"𝐭","u":"𝐮","v":"𝐯","w":"𝐰","x":"𝐱","y":"𝐲","z":"𝐳"};
+    const mono       = {"A":"𝙰","B":"𝙱","C":"𝙲","D":"𝙳","E":"𝙴","F":"𝙵","G":"𝙶","H":"𝙷","I":"𝙸","J":"𝙹","K":"𝙺","L":"𝙻","M":"𝙼","N":"𝙽","O":"𝙾","P":"𝙿","Q":"𝚀","R":"𝚁","S":"𝚂","T":"𝚃","U":"𝚄","V":"𝚅","W":"𝚆","X":"𝚇","Y":"𝚈","Z":"𝚉","a":"𝚊","b":"𝚋","c":"𝚌","d":"𝚍","e":"𝚎","f":"𝚏","g":"𝚐","h":"𝚑","i":"𝚒","j":"𝚓","k":"𝚔","l":"𝚕","m":"𝚖","n":"𝚗","o":"𝚘","p":"𝚙","q":"𝚚","r":"𝚛","s":"𝚜","t":"𝚝","u":"𝚞","v":"𝚟","w":"𝚠","x":"𝚡","y":"𝚢","z":"𝚣"};
+    const script     = {"A":"𝒜","B":"ℬ","C":"𝒞","D":"𝒟","E":"ℰ","F":"ℱ","G":"𝒢","H":"ℋ","I":"ℐ","J":"𝒥","K":"𝒦","L":"ℒ","M":"ℳ","N":"𝒩","O":"𝒪","P":"𝒫","Q":"𝒬","R":"ℛ","S":"𝒮","T":"𝒯","U":"𝒰","V":"𝒱","W":"𝒲","X":"𝒳","Y":"𝒴","Z":"𝒵","a":"𝒶","b":"𝒷","c":"𝒸","d":"𝒹","e":"ℯ","f":"𝒻","g":"ℊ","h":"𝒽","i":"𝒾","j":"𝒿","k":"𝓀","l":"𝓁","m":"𝓂","n":"𝓃","o":"ℴ","p":"𝓅","q":"𝓆","r":"𝓇","s":"𝓈","t":"𝓉","u":"𝓊","v":"𝓋","w":"𝓌","x":"𝓍","y":"𝓎","z":"𝓏"};
+    const fraktur    = {"A":"𝔄","B":"𝔅","C":"ℭ","D":"𝔇","E":"𝔈","F":"𝔉","G":"𝔊","H":"ℌ","I":"ℑ","J":"𝔍","K":"𝔎","L":"𝔏","M":"𝔐","N":"𝔑","O":"𝔒","P":"𝔓","Q":"𝔔","R":"ℜ","S":"𝔖","T":"𝔗","U":"𝔘","V":"𝔙","W":"𝔚","X":"𝔛","Y":"𝔜","Z":"ℨ","a":"𝔞","b":"𝔟","c":"𝔠","d":"𝔡","e":"𝔢","f":"𝔣","g":"𝔤","h":"𝔥","i":"𝔦","j":"𝔧","k":"𝔨","l":"𝔩","m":"𝔪","n":"𝔫","o":"𝔬","p":"𝔭","q":"𝔮","r":"𝔯","s":"𝔰","t":"𝔱","u":"𝔲","v":"𝔳","w":"𝔴","x":"𝔵","y":"𝔶","z":"𝔷"};
+    const doublestruck = {"A":"𝔸","B":"𝔹","C":"ℂ","D":"𝔻","E":"𝔼","F":"𝔽","G":"𝔾","H":"ℍ","I":"𝕀","J":"𝕁","K":"𝕂","L":"𝕃","M":"𝕄","N":"ℕ","O":"𝕆","P":"ℙ","Q":"ℚ","R":"ℝ","S":"𝕊","T":"𝕋","U":"𝕌","V":"𝕍","W":"𝕎","X":"𝕏","Y":"𝕐","Z":"ℤ","a":"𝕒","b":"𝕓","c":"𝕔","d":"𝕕","e":"𝕖","f":"𝕗","g":"𝕘","h":"𝕙","i":"𝕚","j":"𝕛","k":"𝕜","l":"𝕝","m":"𝕞","n":"𝕟","o":"𝕠","p":"𝕡","q":"𝕢","r":"𝕣","s":"𝕤","t":"𝕥","u":"𝕦","v":"𝕧","w":"𝕨","x":"𝕩","y":"𝕪","z":"𝕫","0":"𝟘","1":"𝟙","2":"𝟚","3":"𝟛","4":"𝟜","5":"𝟝","6":"𝟞","7":"𝟟","8":"𝟠","9":"𝟡"};
+    const circled    = {"A":"Ⓐ","B":"Ⓑ","C":"Ⓒ","D":"Ⓓ","E":"Ⓔ","F":"Ⓕ","G":"Ⓖ","H":"Ⓗ","I":"Ⓘ","J":"Ⓙ","K":"Ⓚ","L":"Ⓛ","M":"Ⓜ","N":"Ⓝ","O":"Ⓞ","P":"Ⓟ","Q":"Ⓠ","R":"Ⓡ","S":"Ⓢ","T":"Ⓣ","U":"Ⓤ","V":"Ⓥ","W":"Ⓦ","X":"Ⓧ","Y":"Ⓨ","Z":"Ⓩ","a":"ⓐ","b":"ⓑ","c":"ⓒ","d":"ⓓ","e":"ⓔ","f":"ⓕ","g":"ⓖ","h":"ⓗ","i":"ⓘ","j":"ⓙ","k":"ⓚ","l":"ⓛ","m":"ⓜ","n":"ⓝ","o":"ⓞ","p":"ⓟ","q":"ⓠ","r":"ⓡ","s":"ⓢ","t":"ⓣ","u":"ⓤ","v":"ⓥ","w":"ⓦ","x":"ⓧ","y":"ⓨ","z":"ⓩ","0":"⓪","1":"①","2":"②","3":"③","4":"④","5":"⑤","6":"⑥","7":"⑦","8":"⑧","9":"⑨"};
+    const squared    = {"A":"🄰","B":"🄱","C":"🄲","D":"🄳","E":"🄴","F":"🄵","G":"🄶","H":"🄷","I":"🄸","J":"🄹","K":"🄺","L":"🄻","M":"🄼","N":"🄽","O":"🄾","P":"🄿","Q":"🅀","R":"🅁","S":"🅂","T":"🅃","U":"🅄","V":"🅅","W":"🅆","X":"🅇","Y":"🅈","Z":"🅉","a":"🄰","b":"🄱","c":"🄲","d":"🄳","e":"🄴","f":"🄵","g":"🄶","h":"🄷","i":"🄸","j":"🄹","k":"🄺","l":"🄻","m":"🄼","n":"🄽","o":"🄾","p":"🄿","q":"🅀","r":"🅁","s":"🅂","t":"🅃","u":"🅄","v":"🅅","w":"🅆","x":"🅇","y":"🅈","z":"🅉"};
+    const smallcaps  = {"a":"ᴀ","b":"ʙ","c":"ᴄ","d":"ᴅ","e":"ᴇ","f":"ғ","g":"ɢ","h":"ʜ","i":"ɪ","j":"ᴊ","k":"ᴋ","l":"ʟ","m":"ᴍ","n":"ɴ","o":"ᴏ","p":"ᴘ","q":"ǫ","r":"ʀ","s":"s","t":"ᴛ","u":"ᴜ","v":"ᴠ","w":"ᴡ","x":"x","y":"ʏ","z":"ᴢ","A":"A","B":"B","C":"C","D":"D","E":"E","F":"F","G":"G","H":"H","I":"I","J":"J","K":"K","L":"L","M":"M","N":"N","O":"O","P":"P","Q":"Q","R":"R","S":"S","T":"T","U":"U","V":"V","W":"W","X":"X","Y":"Y","Z":"Z"};
+    const fancyA     = {"A":"𝙰","B":"𝘽","C":"𝘾","D":"𝘿","E":"𝙀","F":"𝙁","G":"𝙂","H":"𝙃","I":"𝙄","J":"𝙅","K":"𝙆","L":"𝙇","M":"𝙈","N":"𝙉","O":"𝙊","P":"𝙋","Q":"𝙌","R":"𝙍","S":"𝙎","T":"𝙏","U":"𝙐","V":"𝙑","W":"𝙒","X":"𝙓","Y":"𝙔","Z":"𝙕","a":"𝙖","b":"𝙗","c":"𝙘","d":"𝙙","e":"𝙚","f":"𝙛","g":"𝙜","h":"𝙝","i":"𝙞","j":"𝙟","k":"𝙠","l":"𝙡","m":"𝙢","n":"𝙣","o":"𝙤","p":"𝙥","q":"𝙦","r":"𝙧","s":"𝙨","t":"𝙩","u":"𝙪","v":"𝙫","w":"𝙬","x":"𝙭","y":"𝙮","z":"𝙯"};
+
+    // ────────────────────────────────────────────────
+
+    function updateAll() {
+      const text = input.value.trim() || "Nova";
+      result.innerHTML = ''; // temizle
+
+      const copyThis = [];
+
+      transformers.forEach(style => {
+        const transformed = style.fn(text);
+        copyThis.push(transformed);
+
+        const div = document.createElement('div');
+        div.className = 'style-item';
+        div.innerHTML = `<div class="style-name">${style.name}</div>${transformed}`;
+        
+        div.onclick = () => {
+          navigator.clipboard.writeText(transformed);
+          div.style.background = 'rgba(0,212,255,0.25)';
+          setTimeout(() => div.style.background = '', 400);
+          alert('Kopyalandı: ' + transformed);
+        };
+
+        stylesContainer.appendChild(div);
+      });
+
+      // genel kopyala butonu
+      copyBtn.style.display = 'block';
+      copyBtn.onclick = () => {
+        navigator.clipboard.writeText(copyThis.join('\n\n'));
+        copyBtn.textContent = 'Hepsi Kopyalandı!';
+        setTimeout(() => copyBtn.textContent = 'Kopyala', 1800);
+      };
+    }
+
+    input.addEventListener('input', updateAll);
+    updateAll(); // başlangıçta çalıştır
+  </script>
+
+</body>
+</html>
