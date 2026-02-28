@@ -65,7 +65,7 @@
     #status {
       margin: 25px 0;
       font-size: 1.2rem;
-      min-height: 80px;
+      min-height: 100px;
       line-height: 1.5;
     }
     #thumbnail {
@@ -82,7 +82,7 @@
 
   <h1>YouTube → MP3 İndir</h1>
   <div class="container">
-    <input id="url" placeholder="YouTube linkini buraya yapıştır (ör: https://youtu.be/...)" autofocus />
+    <input id="url" placeholder="YouTube linkini buraya yapıştır..." autofocus />
     <button onclick="indirMP3()">MP3 Olarak İndir (ytmp3.sc)</button>
 
     <img id="thumbnail" alt="Video Thumbnail" />
@@ -90,9 +90,8 @@
     <div id="status">Link yapıştır ve butona bas...</div>
 
     <small style="margin-top:20px; display:block;">
-      Bu araç seni https://ytmp3.sc/ sitesine yönlendirir.<br>
-      Orada otomatik dönüştürme başlar, "Download" butonuna basıp MP3'ü alabilirsin.<br>
-      (Site ücretsiz, anahtar istemez – 2026'da hâlâ çalışıyor)
+      Butona basınca link otomatik kopyalanır → ytmp3.sc açılır → sitede input kutusuna yapıştır (Ctrl+V) ve Convert'e bas.<br>
+      (Site otomatik doldurma desteklemiyor, ama bu yöntem çok hızlı.)
     </small>
   </div>
 
@@ -104,19 +103,20 @@
     }
 
     function indirMP3() {
-      const url = document.getElementById('url').value.trim();
+      const urlInput = document.getElementById('url');
+      const userLink = urlInput.value.trim();
       const status = document.getElementById('status');
       const thumb = document.getElementById('thumbnail');
 
-      if (!url) {
+      if (!userLink) {
         status.textContent = 'Link gir lütfen kanka!';
         status.style.color = '#ff6b6b';
         return;
       }
 
-      const videoId = getVideoId(url);
+      const videoId = getVideoId(userLink);
       if (!videoId) {
-        status.textContent = 'Geçersiz YouTube linki... Doğru formatta gir.';
+        status.textContent = 'Geçersiz YouTube linki...';
         status.style.color = '#ff6b6b';
         return;
       }
@@ -125,21 +125,28 @@
       thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       thumb.style.display = 'block';
 
-      status.innerHTML = 'Hazırlanıyor...<br>ytmp3.sc sitesine yönlendiriliyorsun!<br><br>Yönlendirme sonrası sitede linkini yapıştır ve "Convert"e bas.';
+      status.innerHTML = 'Link hazır!<br>Otomatik kopyalanıyor... ytmp3.sc açılıyor.';
       status.style.color = '#ffe66d';
 
-      const servisUrl = 'https://ytmp3.sc/';
+      // Kullanıcının girdiği tam linki clipboard'a kopyala
+      navigator.clipboard.writeText(userLink).then(() => {
+        console.log('Link kopyalandı:', userLink);
+      }).catch(err => {
+        console.error('Kopyalama hatası:', err);
+      });
 
+      // Siteyi aç
+      const servisUrl = 'https://ytmp3.sc/';
       setTimeout(() => {
         window.open(servisUrl, '_blank');
         status.innerHTML = `Site açıldı!<br><br>
-          Adımlar şöyle:<br>
-          1. Açılan sitede YouTube linkini (senin yapıştırdığın linki) input kutusuna kopyala-yapıştır.<br>
-          2. "Convert" butonuna tıkla.<br>
-          3. Dönüşüm bitince "Download" butonu çıkar – ona bas ve MP3'ü indir.<br><br>
-          Kolay gelsin! Eğer reklam çıkarsa geçebilirsin. 🔥`;
+          <strong>Şimdi yapman gereken:</strong><br>
+          1. Açılan sitede input kutusuna sağ tıkla → Yapıştır (veya Ctrl+V).<br>
+          2. "Convert" butonuna bas.<br>
+          3. Dönüşüm bitince "Download" çıkar → MP3'ü indir.<br><br>
+          Link zaten kopyalandı, yapıştırman 2 saniye sürer! 🔥`;
         status.style.color = '#95ff9e';
-      }, 1500);  // 1.5 sn bekle ki kullanıcı görsün
+      }, 1500);
     }
   </script>
 
