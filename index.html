@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>YouTube → MP3 İndir - ytmp3.sc</title>
+
+  <!-- Reklam 1: effectivegatecpm JS (head'e koydum, async ekledim) -->
+  <script async src="https://pl28817110.effectivegatecpm.com/99/20/c9/9920c96a2eb8a55c4b75e3025049eeee.js"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,7 +19,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
     }
     h1 {
       font-size: 2.8rem;
@@ -32,6 +35,7 @@
       box-shadow: 0 12px 35px rgba(0,0,0,0.6);
       border: 1px solid #7c5ab5;
       text-align: center;
+      margin: 20px auto;
     }
     input {
       width: 100%;
@@ -76,22 +80,136 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     }
     small { color: #aaa; font-size: 0.95rem; line-height: 1.4; }
+
+    /* Reklam stilleri */
+    .ad-container {
+      margin: 30px auto;
+      text-align: center;
+      max-width: 100%;
+    }
+    .sidebar-ad {
+      position: fixed;
+      top: 150px;
+      right: 20px;
+      z-index: 999;
+      width: 160px;
+    }
+    .footer-ad {
+      margin-top: 50px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Reklam: Üst banner (728x90) -->
+  <div class="ad-container">
+    <script> 
+      atOptions = { 
+        'key' : '454cad97b4592e99bfc13d60e522e0d0', 
+        'format' : 'iframe', 
+        'height' : 90, 
+        'width' : 728, 
+        'params' : {} 
+      }; 
+    </script>
+    <script src="https://www.highperformanceformat.com/454cad97b4592e99bfc13d60e522e0d0/invoke.js"></script>
+  </div>
 
   <h1>YouTube → MP3 İndir</h1>
   <div class="container">
     <input id="url" placeholder="YouTube linkini buraya yapıştır..." autofocus />
     <button onclick="indirMP3()">MP3 Olarak İndir</button>
-
     <img id="thumbnail" alt="Video Thumbnail" />
-
     <div id="status">Link yapıştır ve butona bas...</div>
-
     <small style="margin-top:20px; display:block;">
-    Açılan Sitedeki Kutuya Linki Yapıştırıp İndir
+      Açılan Sitedeki Kutuya Linki Yapıştırıp İndir
     </small>
+  </div>
+
+  <!-- Reklam: Orta banner (468x60) -->
+  <div class="ad-container">
+    <script async="async" data-cfasync="false" src="https://pl28817197.effectivegatecpm.com/143d8a3e8a6885d952b37b143814e17f/invoke.js"></script>
+    <div id="container-143d8a3e8a6885d952b37b143814e17f"></div>
+  </div>
+
+  <!-- Reklam: Başka banner (60x468) -->
+  <div class="ad-container">
+    <script> 
+      atOptions = { 
+        'key' : 'ee518bebf1bf31ed6691728289c153ce', 
+        'format' : 'iframe', 
+        'height' : 60, 
+        'width' : 468, 
+        'params' : {} 
+      }; 
+    </script>
+    <script src="https://www.highperformanceformat.com/ee518bebf1bf31ed6691728289c153ce/invoke.js"></script>
+  </div>
+
+  <!-- Reklam: Sidebar sabit (160x600) -->
+  <div class="sidebar-ad">
+    <script> 
+      atOptions = { 
+        'key' : 'ed730f2286db804ed2df887bffdcf7d7', 
+        'format' : 'iframe', 
+        'height' : 600, 
+        'width' : 160, 
+        'params' : {} 
+      }; 
+    </script>
+    <script src="https://www.highperformanceformat.com/ed730f2286db804ed2df887bffdcf7d7/invoke.js"></script>
+  </div>
+
+  <!-- Reklam: Kare banner (300x250) -->
+  <div class="ad-container">
+    <script> 
+      atOptions = { 
+        'key' : '4f7596b43d9fd21435f11423b5f015ab', 
+        'format' : 'iframe', 
+        'height' : 250, 
+        'width' : 300, 
+        'params' : {} 
+      }; 
+    </script>
+    <script src="https://www.highperformanceformat.com/4f7596b43d9fd21435f11423b5f015ab/invoke.js"></script>
+  </div>
+
+  <!-- Reklam: Başka sidebar benzeri (160x300) -->
+  <div class="ad-container">
+    <script> 
+      atOptions = { 
+        'key' : '67de96499375b6d93ef1ad15a4f124de', 
+        'format' : 'iframe', 
+        'height' : 300, 
+        'width' : 160, 
+        'params' : {} 
+      }; 
+    </script>
+    <script src="https://www.highperformanceformat.com/67de96499375b6d93ef1ad15a4f124de/invoke.js"></script>
+  </div>
+
+  <!-- Reklam: Mobil banner (320x50) -->
+  <div class="ad-container">
+    <script> 
+      atOptions = { 
+        'key' : '303d6d7bba1e4a1fb25db47a3f3e0ff9', 
+        'format' : 'iframe', 
+        'height' : 50, 
+        'width' : 320, 
+        'params' : {} 
+      }; 
+    </script>
+    <script src="https://www.highperformanceformat.com/303d6d7bba1e4a1fb25db47a3f3e0ff9/invoke.js"></script>
+  </div>
+
+  <!-- Reklam: effectivegatecpm son script (body sonuna) -->
+  <script src="https://pl28817221.effectivegatecpm.com/c0/e3/d9/c0e3d94a3f9fc1f02d305ea24f601067.js"></script>
+
+  <!-- effectivegatecpm linki iframe olarak (reklam sayfası) -->
+  <div class="ad-container footer-ad">
+    <iframe src="https://www.effectivegatecpm.com/hvf6ymwpfy?key=a28112b550e9b608f97e203007f53370" 
+            width="728" height="90" frameborder="0" scrolling="no" style="max-width:100%;"></iframe>
   </div>
 
   <script>
@@ -100,40 +218,33 @@
       const match = url.match(regex);
       return match ? match[1] : null;
     }
-
     function indirMP3() {
       const urlInput = document.getElementById('url');
       const userLink = urlInput.value.trim();
       const status = document.getElementById('status');
       const thumb = document.getElementById('thumbnail');
-
       if (!userLink) {
         status.textContent = 'Link gir lütfen kanka!';
         status.style.color = '#ff6b6b';
         return;
       }
-
       const videoId = getVideoId(userLink);
       if (!videoId) {
         status.textContent = 'Geçersiz YouTube linki...';
         status.style.color = '#ff6b6b';
         return;
       }
-
       // Thumbnail göster
       thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       thumb.style.display = 'block';
-
       status.innerHTML = 'Link hazır!<br>Otomatik kopyalanıyor... ytmp3.sc açılıyor.';
       status.style.color = '#ffe66d';
-
       // Kullanıcının girdiği tam linki clipboard'a kopyala
       navigator.clipboard.writeText(userLink).then(() => {
         console.log('Link kopyalandı:', userLink);
       }).catch(err => {
         console.error('Kopyalama hatası:', err);
       });
-
       // Siteyi aç
       const servisUrl = 'https://ytmp3.sc/';
       setTimeout(() => {
@@ -148,6 +259,5 @@
       }, 1500);
     }
   </script>
-
 </body>
 </html>
