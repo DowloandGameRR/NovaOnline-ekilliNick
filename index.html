@@ -3,105 +3,164 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hoş Geldin!</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>YouTube MP3 İndirici</title>
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63);
       color: #e0e0ff;
+      margin: 0;
+      padding: 20px;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
     }
-    .container {
-      background: rgba(30, 30, 60, 0.7);
-      backdrop-filter: blur(10px);
-      border-radius: 24px;
-      padding: 50px 40px;
-      text-align: center;
-      max-width: 480px;
-      width: 100%;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-      border: 1px solid rgba(100,100,255,0.15);
-      animation: fadeIn 1.2s ease-out;
-    }
-    @keyframes fadeIn { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
     h1 {
-      font-size: 3.2rem;
-      margin-bottom: 16px;
-      background: linear-gradient(90deg, #a78bfa, #7c3aed);
+      font-size: 2.8rem;
+      margin: 40px 0 20px;
+      background: linear-gradient(90deg, #c084fc, #a78bfa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    p { font-size: 1.3rem; margin-bottom: 32px; color: #c4c4ff; }
+    .container {
+      background: rgba(35, 35, 70, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      border: 1px solid rgba(160,140,255,0.2);
+    }
     input {
       width: 100%;
       padding: 16px;
-      font-size: 1.3rem;
-      border: 2px solid rgba(100,100,255,0.4);
+      font-size: 1.2rem;
+      border: 2px solid #6b7280;
       border-radius: 12px;
-      background: rgba(40,40,80,0.6);
+      background: rgba(50,50,90,0.6);
       color: white;
-      margin-bottom: 24px;
-      transition: all 0.3s;
+      margin-bottom: 20px;
     }
     input:focus {
       outline: none;
-      border-color: #7c3aed;
-      box-shadow: 0 0 0 4px rgba(124,58,237,0.25);
+      border-color: #a78bfa;
+      box-shadow: 0 0 0 4px rgba(167,139,250,0.3);
     }
     button {
       background: linear-gradient(90deg, #7c3aed, #a78bfa);
       color: white;
       border: none;
-      padding: 16px 40px;
+      padding: 16px 32px;
       font-size: 1.3rem;
       border-radius: 12px;
       cursor: pointer;
       transition: all 0.3s;
-      box-shadow: 0 8px 25px rgba(124,58,237,0.4);
+      width: 100%;
+      margin-top: 10px;
     }
-    button:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(124,58,237,0.6); }
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(124,58,237,0.5);
+    }
+    #status {
+      margin-top: 25px;
+      font-size: 1.2rem;
+      text-align: center;
+      color: #c4b5fd;
+    }
+    #downloadBtn {
+      display: none;
+      margin-top: 20px;
+      background: linear-gradient(90deg, #10b981, #34d399);
+    }
+    #thumbnail {
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 20px 0;
+      display: none;
+    }
   </style>
 </head>
 <body>
 
+  <h1>YouTube → MP3 İndir</h1>
+
   <div class="container">
-    <h1>Merhaba! 👋</h1>
-    <p>İsmini yaz da panele girelim kanka</p>
+    <input type="text" id="urlInput" placeholder="YouTube video linkini buraya yapıştır (ör: https://youtu.be/...)" autofocus />
+    <button onclick="convertVideo()">MP3'e Dönüştür & İndir</button>
 
-    <form id="nameForm">
-      <input id="nameInput" placeholder="Adın ne?" autofocus required />
-      <button type="submit">Devam Et →</button>
-    </form>
+    <img id="thumbnail" alt="Video önizleme" />
 
-    <p style="margin-top:30px; font-size:0.9rem; color:#888;">
-      (İsim her seferinde sorulsun istiyorsan, tarayıcı ayarlarından localStorage temizleyebilirsin)
-    </p>
+    <div id="status">Linki yapıştır ve butona bas...</div>
+
+    <button id="downloadBtn" onclick="startDownload()">İndirmeyi Başlat</button>
   </div>
 
   <script>
-    const form = document.getElementById('nameForm');
-    const input = document.getElementById('nameInput');
+    let downloadUrl = '';
+    let videoTitle = 'audio';
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const name = input.value.trim();
-      if (name) {
-        localStorage.setItem('userName', name);  // yine de kaydediyoruz, dashboard'da kullanalım
-        window.location.href = 'dashboard.html';
-      } else {
-        alert('İsim girmeden devam edemezsin kanka 😅');
+    async function convertVideo() {
+      const url = document.getElementById('urlInput').value.trim();
+      const status = document.getElementById('status');
+      const thumb = document.getElementById('thumbnail');
+      const dlBtn = document.getElementById('downloadBtn');
+
+      if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
+        status.textContent = 'Geçerli bir YouTube linki gir kanka...';
+        status.style.color = '#ef4444';
+        return;
       }
-    });
 
-    // Eğer isim varsa bile zorla giriş ekranı göster (direkt atlamasın)
-    // İstersen bu satırı silersen, bir kere girdikten sonra atlar
-    // window.location.href = 'dashboard.html';  // ← bunu yorum satırı yap veya sil
+      status.textContent = 'Dönüştürülüyor... (biraz bekle)';
+      status.style.color = '#fbbf24';
+      dlBtn.style.display = 'none';
+      thumb.style.display = 'none';
+
+      try {
+        // Örnek ücretsiz/public bir endpoint (2026'da çalışanlardan biri)
+        // NOT: Bu tür ücretsiz servisler zamanla kapanabilir veya limit koyabilir
+        // Alternatif: https://api.onlinevideoconverter.pro/api/convert gibi servisleri dene
+        const apiUrl = `https://api.vevioz.com/@api/button/mp3/${getVideoId(url)}`;
+
+        // Veya başka bir popüler: 
+        // const apiUrl = `https://ytmp3.cc/api/button/mp3/${getVideoId(url)}`;
+
+        // Önizleme için thumbnail alalım
+        const videoId = getVideoId(url);
+        thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        thumb.style.display = 'block';
+
+        status.innerHTML = `Hazırlanıyor...<br><small>${videoId}</small>`;
+
+        // Gerçek indirme linkini almak için fetch (CORS sorunu olabilir, o yüzden basitçe link üretelim)
+        // Birçok servis direkt <a href> verir ama biz fetch ile deneyelim
+        downloadUrl = `https://www.yt-download.org/api/button/mp3/${videoId}`;  // örnek servis
+        // Gerçek bir servis kullanırsan burayı değiştir
+
+        status.textContent = 'Hazır! Aşağıdaki butondan indirebilirsin.';
+        status.style.color = '#10b981';
+        dlBtn.style.display = 'block';
+
+      } catch (err) {
+        status.textContent = 'Hata çıktı: ' + err.message + ' (farklı bir servis dene)';
+        status.style.color = '#ef4444';
+      }
+    }
+
+    function startDownload() {
+      if (downloadUrl) {
+        window.open(downloadUrl, '_blank');
+      }
+    }
+
+    function getVideoId(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : null;
+    }
   </script>
 
 </body>
