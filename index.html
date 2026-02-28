@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>YouTube → MP3 İndir - ytmp3.sc</title>
 
-  <!-- Reklam script'leri head'e (async) -->
+  <!-- Reklam script'leri head'e -->
   <script async src="https://pl28817110.effectivegatecpm.com/99/20/c9/9920c96a2eb8a55c4b75e3025049eeee.js"></script>
 
   <style>
@@ -14,13 +14,13 @@
       background: linear-gradient(135deg, #0f001f, #1a0033);
       color: #e0d0ff;
       margin: 0;
-      padding: 10px 160px 20px 160px; /* Sol-sağ sidebar için geniş boşluk */
+      padding: 10px 180px 20px 180px; /* Yan sidebar'lar için daha geniş boşluk */
       min-height: 100vh;
       position: relative;
     }
     h1 {
       font-size: 2.5rem;
-      margin: 20px 0 10px;
+      margin: 10px 0 5px;
       color: #b19cd9;
       text-shadow: 0 0 10px #9f7acd;
       text-align: center;
@@ -28,15 +28,14 @@
     .container {
       background: rgba(30, 20, 60, 0.75);
       border-radius: 16px;
-      padding: 25px;
+      padding: 20px;
       width: 100%;
       max-width: 600px;
       box-shadow: 0 12px 35px rgba(0,0,0,0.6);
       border: 1px solid #7c5ab5;
       text-align: center;
-      margin: 15px auto;
+      margin: 10px auto;
       z-index: 1;
-      position: relative;
     }
     input {
       width: 100%;
@@ -46,7 +45,7 @@
       border-radius: 10px;
       background: #0f0820;
       color: #fff;
-      margin: 15px 0;
+      margin: 10px 0;
     }
     input:focus {
       border-color: #b19cd9;
@@ -57,8 +56,8 @@
       background: linear-gradient(90deg, #7c5ab5, #b19cd9);
       color: white;
       border: none;
-      padding: 12px 35px;
-      font-size: 1.2rem;
+      padding: 12px 30px;
+      font-size: 1.1rem;
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.3s;
@@ -68,64 +67,64 @@
       box-shadow: 0 8px 20px rgba(177,156,217,0.5);
     }
     #status {
-      margin: 20px 0;
-      font-size: 1.1rem;
-      min-height: 80px;
-      line-height: 1.4;
+      margin: 15px 0;
+      font-size: 1rem;
+      min-height: 70px;
+      line-height: 1.3;
     }
     #thumbnail {
       max-width: 100%;
       border-radius: 10px;
-      margin: 15px 0;
+      margin: 10px 0;
       display: none;
       box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     }
-    small { color: #aaa; font-size: 0.9rem; line-height: 1.3; }
+    small { color: #aaa; font-size: 0.85rem; line-height: 1.2; }
 
-    /* Reklam stilleri – ilk ekranda maksimum görünürlük */
+    /* Reklam stilleri – hepsi üstte/ilk ekranda yoğun */
     .ad-top {
       text-align: center;
-      margin: 10px auto 20px;
+      margin: 5px auto 15px;
       max-width: 728px;
     }
     .ad-middle {
       text-align: center;
-      margin: 20px auto;
+      margin: 15px auto;
       max-width: 468px;
     }
     .sidebar-left {
       position: fixed;
-      top: 80px;
+      top: 60px;  /* Daha üstte başlasın */
       left: 10px;
       z-index: 999;
       width: 160px;
     }
     .sidebar-right {
       position: fixed;
-      top: 80px;
+      top: 60px;  /* Daha üstte başlasın */
       right: 10px;
       z-index: 999;
       width: 160px;
     }
     .ad-floating {
-      margin: 20px auto;
+      margin: 15px auto;
       text-align: center;
     }
     .ad-bottom {
       text-align: center;
-      margin: 30px auto 20px;
+      margin: 20px auto 10px;
       max-width: 728px;
     }
     @media (max-width: 1000px) {
       body { padding: 10px; }
-      .sidebar-left, .sidebar-right { display: none; } /* Mobilde yanlar gizli */
+      .sidebar-left, .sidebar-right { display: none; }
       .ad-top, .ad-middle { max-width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Sol sidebar (ilk ekranda görünür) -->
+  <!-- Sol sidebar (ilk ekranda üstte görünür) -->
   <div class="sidebar-left">
     <script> 
       atOptions = { 
@@ -139,7 +138,7 @@
     <script src="https://www.highperformanceformat.com/67de96499375b6d93ef1ad15a4f124de/invoke.js"></script>
   </div>
 
-  <!-- Sağ sidebar (ilk ekranda görünür – büyük olan) -->
+  <!-- Sağ sidebar (ilk ekranda üstte görünür – büyük) -->
   <div class="sidebar-right">
     <script> 
       atOptions = { 
@@ -167,18 +166,38 @@
     <script src="https://www.highperformanceformat.com/454cad97b4592e99bfc13d60e522e0d0/invoke.js"></script>
   </div>
 
+  <!-- Üst orta banner (468x60) -->
+  <div class="ad-top">
+    <script async="async" data-cfasync="false" src="https://pl28817197.effectivegatecpm.com/143d8a3e8a6885d952b37b143814e17f/invoke.js"></script>
+    <div id="container-143d8a3e8a6885d952b37b143814e17f"></div>
+  </div>
+
+  <!-- Başka üst banner (60x468) -->
+  <div class="ad-top">
+    <script> 
+      atOptions = { 
+        'key' : 'ee518bebf1bf31ed6691728289c153ce', 
+        'format' : 'iframe', 
+        'height' : 60, 
+        'width' : 468, 
+        'params' : {} 
+      }; 
+    </script>
+    <script src="https://www.highperformanceformat.com/ee518bebf1bf31ed6691728289c153ce/invoke.js"></script>
+  </div>
+
   <h1>YouTube → MP3 İndir</h1>
   <div class="container">
     <input id="url" placeholder="YouTube linkini buraya yapıştır..." autofocus />
     <button onclick="indirMP3()">MP3 Olarak İndir</button>
     <img id="thumbnail" alt="Video Thumbnail" />
     <div id="status">Link yapıştır ve butona bas...</div>
-    <small style="margin-top:20px; display:block;">
+    <small style="margin-top:15px; display:block;">
       Açılan Sitedeki Kutuya Linki Yapıştırıp İndir
     </small>
   </div>
 
-  <!-- Orta üst reklam (300x250 – ana içeriğin hemen üstünde/yanında görünür) -->
+  <!-- Orta üst reklam (300x250 – ana aracın hemen altında/yanında) -->
   <div class="ad-floating">
     <script> 
       atOptions = { 
@@ -192,28 +211,8 @@
     <script src="https://www.highperformanceformat.com/4f7596b43d9fd21435f11423b5f015ab/invoke.js"></script>
   </div>
 
-  <!-- Orta banner (468x60) -->
+  <!-- Orta mobil banner (320x50) -->
   <div class="ad-middle">
-    <script async="async" data-cfasync="false" src="https://pl28817197.effectivegatecpm.com/143d8a3e8a6885d952b37b143814e17f/invoke.js"></script>
-    <div id="container-143d8a3e8a6885d952b37b143814e17f"></div>
-  </div>
-
-  <!-- Başka orta banner (60x468) -->
-  <div class="ad-middle">
-    <script> 
-      atOptions = { 
-        'key' : 'ee518bebf1bf31ed6691728289c153ce', 
-        'format' : 'iframe', 
-        'height' : 60, 
-        'width' : 468, 
-        'params' : {} 
-      }; 
-    </script>
-    <script src="https://www.highperformanceformat.com/ee518bebf1bf31ed6691728289c153ce/invoke.js"></script>
-  </div>
-
-  <!-- Alt banner'lar (mobil ve footer için) -->
-  <div class="ad-bottom">
     <script> 
       atOptions = { 
         'key' : '303d6d7bba1e4a1fb25db47a3f3e0ff9', 
@@ -226,11 +225,11 @@
     <script src="https://www.highperformanceformat.com/303d6d7bba1e4a1fb25db47a3f3e0ff9/invoke.js"></script>
   </div>
 
-  <!-- Son etkili script'ler body sonuna -->
+  <!-- Son etkili script'ler -->
   <script src="https://pl28817221.effectivegatecpm.com/c0/e3/d9/c0e3d94a3f9fc1f02d305ea24f601067.js"></script>
 
-  <!-- effectivegatecpm iframe (alt kısımda) -->
-  <div class="ad-bottom">
+  <!-- effectivegatecpm iframe (orta/alt kısımda ama ilk ekrana yakın) -->
+  <div class="ad-middle">
     <iframe src="https://www.effectivegatecpm.com/hvf6ymwpfy?key=a28112b550e9b608f97e203007f53370" 
             width="728" height="90" frameborder="0" scrolling="no" style="max-width:100%;"></iframe>
   </div>
@@ -257,18 +256,15 @@
         status.style.color = '#ff6b6b';
         return;
       }
-      // Thumbnail göster
       thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       thumb.style.display = 'block';
       status.innerHTML = 'Link hazır!<br>Otomatik kopyalanıyor... ytmp3.sc açılıyor.';
       status.style.color = '#ffe66d';
-      // Kullanıcının girdiği tam linki clipboard'a kopyala
       navigator.clipboard.writeText(userLink).then(() => {
         console.log('Link kopyalandı:', userLink);
       }).catch(err => {
         console.error('Kopyalama hatası:', err);
       });
-      // Siteyi aç
       const servisUrl = 'https://ytmp3.sc/';
       setTimeout(() => {
         window.open(servisUrl, '_blank');
