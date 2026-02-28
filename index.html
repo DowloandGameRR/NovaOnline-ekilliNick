@@ -65,7 +65,8 @@
     #status {
       margin: 25px 0;
       font-size: 1.2rem;
-      min-height: 50px;
+      min-height: 80px;
+      line-height: 1.5;
     }
     #thumbnail {
       max-width: 100%;
@@ -124,22 +125,21 @@
       thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       thumb.style.display = 'block';
 
-      status.textContent = 'Hazırlanıyor... ytmp3.sc'ye yönlendiriliyorsun!';
+      status.innerHTML = 'Hazırlanıyor...<br>ytmp3.sc sitesine yönlendiriliyorsun!<br><br>Yönlendirme sonrası sitede linkini yapıştır ve "Convert"e bas.';
       status.style.color = '#ffe66d';
 
-      // ytmp3.sc'ye yönlendir (site kendi input'una URL'yi otomatik almıyor, ama kullanıcı kolayca yapıştırabilir)
-      // Direkt parametre desteği yok gibi görünüyor, o yüzden basit yönlendirme + talimat
       const servisUrl = 'https://ytmp3.sc/';
 
       setTimeout(() => {
         window.open(servisUrl, '_blank');
         status.innerHTML = `Site açıldı!<br><br>
-          1. Açılan sitede YouTube linkini yapıştır.<br>
-          2. "Convert" butonuna bas.<br>
-          3. Dönüşüm bitince "Download" butonuna tıkla ve MP3'ü indir.<br><br>
-          Kolay gelsin! 🔥`;
+          Adımlar şöyle:<br>
+          1. Açılan sitede YouTube linkini (senin yapıştırdığın linki) input kutusuna kopyala-yapıştır.<br>
+          2. "Convert" butonuna tıkla.<br>
+          3. Dönüşüm bitince "Download" butonu çıkar – ona bas ve MP3'ü indir.<br><br>
+          Kolay gelsin! Eğer reklam çıkarsa geçebilirsin. 🔥`;
         status.style.color = '#95ff9e';
-      }, 1200);
+      }, 1500);  // 1.5 sn bekle ki kullanıcı görsün
     }
   </script>
 
