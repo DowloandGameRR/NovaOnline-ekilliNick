@@ -3,11 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
- 
-  <!-- Google AdSense Auto Ads (Otomatik Reklamlar) -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4026195634356024"
-     crossorigin="anonymous"></script>
-  <!-- AdSense script sonu -->
+  <!-- Yeni reklam scripti -->
+  <script src="https://pl28817110.effectivegatecpm.com/99/20/c9/9920c96a2eb8a55c4b75e3025049eeee.js"></script>
   <title>Şekilli Nick - Nova Online ⚡ 180+ Stil</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto+Mono:wght@400&display=swap');
@@ -128,16 +125,13 @@
     <input type="text" id="nick" placeholder="Nickinizi buraya yazın..." value="">
     <div class="style-grid" id="styles"></div>
   </div>
-
   <div class="footer">
-    Nova Online 2026 © Tüm hakları saklıdır. | 
+    Nova Online 2026 © Tüm hakları saklıdır. |
     <a href="gizlilik-politikasi.html" target="_blank">Gizlilik Politikası</a>
   </div>
-
   <script>
     const input = document.getElementById('nick');
     const stylesContainer = document.getElementById('styles');
-
     // Unicode haritaları
     const bold = {"A":"𝗔","B":"𝗕","C":"𝗖","D":"𝗗","E":"𝗘","F":"𝗙","G":"𝗚","H":"𝗛","I":"𝗜","J":"𝗝","K":"𝗞","L":"𝗟","M":"𝗠","N":"𝗡","O":"𝗢","P":"𝗣","Q":"𝗤","R":"𝗥","S":"𝗦","T":"𝗧","U":"𝗨","V":"𝗩","W":"𝗪","X":"𝗫","Y":"𝗬","Z":"𝗭","a":"𝗮","b":"𝗯","c":"𝗰","d":"𝗱","e":"𝗲","f":"𝗳","g":"𝗴","h":"𝗵","i":"𝗶","j":"𝗷","k":"𝗸","l":"𝗹","m":"𝗺","n":"𝗻","o":"𝗼","p":"𝗽","q":"𝗾","r":"𝗿","s":"𝘀","t":"𝘁","u":"𝘂","v":"𝘃","w":"𝘄","x":"𝘅","y":"𝘆","z":"𝘇"};
     const italic = {"A":"𝘈","B":"𝘉","C":"𝘊","D":"𝘋","E":"𝘌","F":"𝘍","G":"𝘎","H":"𝘏","I":"𝘐","J":"𝘑","K":"𝘒","L":"𝘓","M":"𝘔","N":"𝘕","O":"𝘖","P":"𝘗","Q":"𝘘","R":"𝘙","S":"𝘚","T":"𝘛","U":"𝘜","V":"𝘝","W":"𝘞","X":"𝘟","Y":"𝘠","Z":"𝘡","a":"𝘢","b":"𝘣","c":"𝘤","d":"𝘥","e":"𝘦","f":"𝘧","g":"𝘨","h":"𝘩","i":"𝘪","j":"𝘫","k":"𝘬","l":"𝘭","m":"𝘮","n":"𝘯","o":"𝘰","p":"𝘱","q":"𝘲","r":"𝘳","s":"𝘴","t":"𝘵","u":"𝘶","v":"𝘷","w":"𝘸","x":"𝘹","y":"𝘺","z":"𝘻"};
@@ -155,11 +149,9 @@
     const fullwidth = {"A":"Ａ","B":"Ｂ","C":"Ｃ","D":"Ｄ","E":"Ｅ","F":"Ｆ","G":"Ｇ","H":"Ｈ","I":"Ｉ","J":"Ｊ","K":"Ｋ","L":"Ｌ","M":"Ｍ","N":"Ｎ","O":"Ｏ","P":"Ｐ","Q":"Ｑ","R":"Ｒ","S":"Ｓ","T":"Ｔ","U":"Ｕ","V":"Ｖ","W":"Ｗ","X":"Ｘ","Y":"Ｙ","Z":"Ｚ","a":"ａ","b":"ｂ","c":"ｃ","d":"ｄ","e":"ｅ","f":"ｆ","g":"ｇ","h":"ｈ","i":"ｉ","j":"ｊ","k":"ｋ","l":"ｌ","m":"ｍ","n":"ｎ","o":"ｏ","p":"ｐ","q":"ｑ","r":"ｒ","s":"ｓ","t":"ｔ","u":"ｕ","v":"ｖ","w":"ｗ","x":"ｘ","y":"ｙ","z":"ｚ"};
     const superscript = {"0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹","a":"ᵃ","b":"ᵇ","c":"ᶜ","d":"ᵈ","e":"ᵉ","f":"ᶠ","g":"ᵍ","h":"ʰ","i":"ⁱ","j":"ʲ","k":"ᵏ","l":"ˡ","m":"ᵐ","n":"ⁿ","o":"ᵒ","p":"ᵖ","r":"ʳ","s":"ˢ","t":"ᵗ","u":"ᵘ","v":"ᵛ","w":"ʷ","x":"ˣ","y":"ʸ"};
     const subscript = {"0":"₀","1":"₁","2":"₂","3":"₃","4":"₄","5":"₅","6":"₆","7":"₇","8":"₈","9":"₉","a":"ₐ","e":"ₑ","h":"ₕ","i":"ᵢ","j":"ⱼ","k":"ₖ","l":"ₗ","m":"ₘ","n":"ₙ","o":"ₒ","p":"ₚ","r":"ᵣ","s":"ₛ","t":"ₜ","u":"ᵤ","v":"ᵥ","x":"ₓ"};
-
     function map(text, dict) {
       return text.split('').map(c => dict[c] || c).join('');
     }
-
     function zalgo(text, intensity = 5) {
       const marks = "̴̵̶̷̸̾҉̛̖̗̘̙̅̿̏̑̌̆̊̃̀́̂̌̆̊̃̐̒̓̔̀́̂̃̄̅̆̇̈̉̊̋̌̍̎̏̐̑̒̓̔̕̕̚͟͜͞͝͡".split('');
       return text.split('').map(c => {
@@ -168,14 +160,12 @@
         return res;
       }).join('');
     }
-
     function underline(t) { return t.split('').map(() => '\u0332').join(''); }
     function strikethrough(t){ return t.split('').map(() => '\u0336').join(''); }
     function overline(t) { return t.split('').map(() => '\u0305').join(''); }
     function slashThrough(t) { return t.split('').map(c => c + '\u0338').join(''); }
     function dotAbove(t) { return t.split('').map(c => c + '\u0307').join(''); }
     function wavy(t) { return t.split('').map(c => c + '~').join(''); }
-
     const transformers = [
       t => map(t, bold),
       t => map(t, italic),
@@ -229,7 +219,6 @@
       t => "⚔ " + map(t, bold) + " ⚔",
       t => t + " Nova Online"
     ];
-
     function copyToClipboard(text, btn) {
       if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {
@@ -244,7 +233,6 @@
         fallback(text, btn);
       }
     }
-
     function fallback(text, btn) {
       const ta = document.createElement('textarea');
       ta.value = text;
@@ -265,7 +253,6 @@
       }
       document.body.removeChild(ta);
     }
-
     function updateAll() {
       const text = input.value.trim() || "Nova";
       stylesContainer.innerHTML = '';
@@ -284,7 +271,6 @@
         stylesContainer.appendChild(div);
       });
     }
-
     input.addEventListener('input', updateAll);
     updateAll();
   </script>
