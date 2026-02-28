@@ -72,12 +72,16 @@
 
   <div class="container">
     <h1>Merhaba! 👋</h1>
-    <p>İsmini yaz</p>
+    <p>İsmini yaz da panele girelim kanka</p>
 
     <form id="nameForm">
-      <input id="nameInput" placeholder="Adın ne kanka?" autofocus required />
+      <input id="nameInput" placeholder="Adın ne?" autofocus required />
       <button type="submit">Devam Et →</button>
     </form>
+
+    <p style="margin-top:30px; font-size:0.9rem; color:#888;">
+      (İsim her seferinde sorulsun istiyorsan, tarayıcı ayarlarından localStorage temizleyebilirsin)
+    </p>
   </div>
 
   <script>
@@ -88,15 +92,16 @@
       e.preventDefault();
       const name = input.value.trim();
       if (name) {
-        localStorage.setItem('userName', name);
+        localStorage.setItem('userName', name);  // yine de kaydediyoruz, dashboard'da kullanalım
         window.location.href = 'dashboard.html';
+      } else {
+        alert('İsim girmeden devam edemezsin kanka 😅');
       }
     });
 
-    // Eğer isim zaten varsa direkt dashboard'a yönlendir
-    if (localStorage.getItem('userName')) {
-      window.location.href = 'dashboard.html';
-    }
+    // Eğer isim varsa bile zorla giriş ekranı göster (direkt atlamasın)
+    // İstersen bu satırı silersen, bir kere girdikten sonra atlar
+    // window.location.href = 'dashboard.html';  // ← bunu yorum satırı yap veya sil
   </script>
 
 </body>
