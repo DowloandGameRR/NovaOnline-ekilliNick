@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>YouTube → MP3 İndir - ytmp3.sc</title>
 
-  <!-- Reklam 1: effectivegatecpm JS (head'e koydum, async ekledim) -->
+  <!-- Reklam script'leri head'e (async ekledim, blocking olmasın) -->
   <script async src="https://pl28817110.effectivegatecpm.com/99/20/c9/9920c96a2eb8a55c4b75e3025049eeee.js"></script>
 
   <style>
@@ -14,17 +14,16 @@
       background: linear-gradient(135deg, #0f001f, #1a0033);
       color: #e0d0ff;
       margin: 0;
-      padding: 20px;
+      padding: 20px 160px 20px 160px; /* Sol ve sağdan sidebar için boşluk bıraktım */
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      position: relative;
     }
     h1 {
       font-size: 2.8rem;
       margin: 40px 0 20px;
       color: #b19cd9;
       text-shadow: 0 0 10px #9f7acd;
+      text-align: center;
     }
     .container {
       background: rgba(30, 20, 60, 0.75);
@@ -36,6 +35,8 @@
       border: 1px solid #7c5ab5;
       text-align: center;
       margin: 20px auto;
+      position: relative;
+      z-index: 1;
     }
     input {
       width: 100%;
@@ -81,29 +82,45 @@
     }
     small { color: #aaa; font-size: 0.95rem; line-height: 1.4; }
 
-    /* Reklam stilleri */
-    .ad-container {
-      margin: 30px auto;
+    /* Reklam stilleri - yanlara ve etrafa yayılmış */
+    .ad-top {
       text-align: center;
-      max-width: 100%;
+      margin: 10px auto 30px;
+      max-width: 728px;
     }
-    .sidebar-ad {
+    .ad-bottom {
+      text-align: center;
+      margin: 40px auto 20px;
+      max-width: 728px;
+    }
+    .sidebar-left {
+      position: fixed;
+      top: 150px;
+      left: 20px;
+      z-index: 999;
+      width: 160px;
+    }
+    .sidebar-right {
       position: fixed;
       top: 150px;
       right: 20px;
       z-index: 999;
       width: 160px;
     }
-    .footer-ad {
-      margin-top: 50px;
+    .ad-floating {
+      margin: 40px auto;
       text-align: center;
+    }
+    @media (max-width: 900px) {
+      body { padding: 20px; }
+      .sidebar-left, .sidebar-right { display: none; } /* Mobilde yan reklamları gizle */
     }
   </style>
 </head>
 <body>
 
-  <!-- Reklam: Üst banner (728x90) -->
-  <div class="ad-container">
+  <!-- Üst banner reklam (728x90) -->
+  <div class="ad-top">
     <script> 
       atOptions = { 
         'key' : '454cad97b4592e99bfc13d60e522e0d0', 
@@ -127,42 +144,8 @@
     </small>
   </div>
 
-  <!-- Reklam: Orta banner (468x60) -->
-  <div class="ad-container">
-    <script async="async" data-cfasync="false" src="https://pl28817197.effectivegatecpm.com/143d8a3e8a6885d952b37b143814e17f/invoke.js"></script>
-    <div id="container-143d8a3e8a6885d952b37b143814e17f"></div>
-  </div>
-
-  <!-- Reklam: Başka banner (60x468) -->
-  <div class="ad-container">
-    <script> 
-      atOptions = { 
-        'key' : 'ee518bebf1bf31ed6691728289c153ce', 
-        'format' : 'iframe', 
-        'height' : 60, 
-        'width' : 468, 
-        'params' : {} 
-      }; 
-    </script>
-    <script src="https://www.highperformanceformat.com/ee518bebf1bf31ed6691728289c153ce/invoke.js"></script>
-  </div>
-
-  <!-- Reklam: Sidebar sabit (160x600) -->
-  <div class="sidebar-ad">
-    <script> 
-      atOptions = { 
-        'key' : 'ed730f2286db804ed2df887bffdcf7d7', 
-        'format' : 'iframe', 
-        'height' : 600, 
-        'width' : 160, 
-        'params' : {} 
-      }; 
-    </script>
-    <script src="https://www.highperformanceformat.com/ed730f2286db804ed2df887bffdcf7d7/invoke.js"></script>
-  </div>
-
-  <!-- Reklam: Kare banner (300x250) -->
-  <div class="ad-container">
+  <!-- Orta reklam (300x250) -->
+  <div class="ad-floating">
     <script> 
       atOptions = { 
         'key' : '4f7596b43d9fd21435f11423b5f015ab', 
@@ -175,8 +158,8 @@
     <script src="https://www.highperformanceformat.com/4f7596b43d9fd21435f11423b5f015ab/invoke.js"></script>
   </div>
 
-  <!-- Reklam: Başka sidebar benzeri (160x300) -->
-  <div class="ad-container">
+  <!-- Sol sidebar reklam (160x300) -->
+  <div class="sidebar-left">
     <script> 
       atOptions = { 
         'key' : '67de96499375b6d93ef1ad15a4f124de', 
@@ -189,8 +172,42 @@
     <script src="https://www.highperformanceformat.com/67de96499375b6d93ef1ad15a4f124de/invoke.js"></script>
   </div>
 
-  <!-- Reklam: Mobil banner (320x50) -->
-  <div class="ad-container">
+  <!-- Sağ sidebar reklam (160x600) -->
+  <div class="sidebar-right">
+    <script> 
+      atOptions = { 
+        'key' : 'ed730f2286db804ed2df887bffdcf7d7', 
+        'format' : 'iframe', 
+        'height' : 600, 
+        'width' : 160, 
+        'params' : {} 
+      }; 
+    </script>
+    <script src="https://www.highperformanceformat.com/ed730f2286db804ed2df887bffdcf7d7/invoke.js"></script>
+  </div>
+
+  <!-- Alt banner reklam (468x60) -->
+  <div class="ad-bottom">
+    <script async="async" data-cfasync="false" src="https://pl28817197.effectivegatecpm.com/143d8a3e8a6885d952b37b143814e17f/invoke.js"></script>
+    <div id="container-143d8a3e8a6885d952b37b143814e17f"></div>
+  </div>
+
+  <!-- Alt başka banner (60x468) -->
+  <div class="ad-bottom">
+    <script> 
+      atOptions = { 
+        'key' : 'ee518bebf1bf31ed6691728289c153ce', 
+        'format' : 'iframe', 
+        'height' : 60, 
+        'width' : 468, 
+        'params' : {} 
+      }; 
+    </script>
+    <script src="https://www.highperformanceformat.com/ee518bebf1bf31ed6691728289c153ce/invoke.js"></script>
+  </div>
+
+  <!-- Mobil banner (320x50) -->
+  <div class="ad-bottom">
     <script> 
       atOptions = { 
         'key' : '303d6d7bba1e4a1fb25db47a3f3e0ff9', 
@@ -203,11 +220,11 @@
     <script src="https://www.highperformanceformat.com/303d6d7bba1e4a1fb25db47a3f3e0ff9/invoke.js"></script>
   </div>
 
-  <!-- Reklam: effectivegatecpm son script (body sonuna) -->
+  <!-- Diğer etkili script'ler body sonuna -->
   <script src="https://pl28817221.effectivegatecpm.com/c0/e3/d9/c0e3d94a3f9fc1f02d305ea24f601067.js"></script>
 
-  <!-- effectivegatecpm linki iframe olarak (reklam sayfası) -->
-  <div class="ad-container footer-ad">
+  <!-- effectivegatecpm linki iframe olarak alt kısımda -->
+  <div class="ad-bottom">
     <iframe src="https://www.effectivegatecpm.com/hvf6ymwpfy?key=a28112b550e9b608f97e203007f53370" 
             width="728" height="90" frameborder="0" scrolling="no" style="max-width:100%;"></iframe>
   </div>
