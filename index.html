@@ -3,315 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rüzgar'ın Günlük Paneli</title>
+  <title>Hoş Geldin - Rüzgar'ın Paneli</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      font-family: Arial, sans-serif;
-      background: #0f0f23;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       color: #e0e0ff;
-      margin: 0;
-      padding: 20px;
       min-height: 100vh;
-    }
-    header {
-      text-align: center;
-      padding: 20px;
-      background: #1a1a3d;
-      border-radius: 12px;
-      margin-bottom: 20px;
-    }
-    h1 { margin: 0; font-size: 2.5rem; }
-    #greeting { font-size: 1.4rem; color: #a0a0ff; }
-
-    section {
-      background: #1a1a3d;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    h2 { color: #a0a0ff; margin-top: 0; }
-
-    /* İsim girişi */
-    #name-form { margin: 20px 0; }
-    input, button {
-      padding: 12px;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 8px;
-    }
-    input { background: #2a2a5a; color: white; width: 220px; }
-    button { background: #0084ff; color: white; cursor: pointer; }
-
-    /* Saat & Tarih */
-    #clock { font-size: 2.2rem; font-weight: bold; text-align: center; margin: 10px 0; }
-    #date { font-size: 1.3rem; text-align: center; color: #88ff88; }
-
-    /* Takvim */
-    #calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-      text-align: center;
-    }
-    .day-name { font-weight: bold; color: #ffcc00; }
-    .day { padding: 10px; background: #2a2a5a; border-radius: 6px; }
-    .today { background: #ff4444; color: white; font-weight: bold; }
-
-    /* Hesap makinesi */
-    #calculator {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-    }
-    #display {
-      grid-column: span 4;
-      background: #000;
-      color: #0f0;
-      padding: 15px;
-      font-size: 2rem;
-      text-align: right;
-      border-radius: 8px;
-    }
-    .btn { background: #333; color: white; font-size: 1.5rem; cursor: pointer; }
-    .btn-operator { background: #ff9500; }
-    .btn-equal { background: #28a745; }
-
-    /* Fatura hesaplama */
-    #invoice input { width: 180px; margin: 8px 0; }
-
-    /* Todo list */
-    #todo-list li {
-      background: #2a2a5a;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 6px;
       display: flex;
-      justify-content: space-between;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
-    #todo-list button { background: #ff4444; padding: 5px 10px; font-size: 0.9rem; }
+    .container {
+      background: rgba(30, 30, 60, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 50px 40px;
+      text-align: center;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      border: 1px solid rgba(100,100,255,0.15);
+      animation: fadeIn 1.2s ease-out;
+    }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    h1 {
+      font-size: 3.2rem;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, #a78bfa, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p { font-size: 1.3rem; margin-bottom: 32px; color: #c4c4ff; }
+    input {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.3rem;
+      border: 2px solid rgba(100,100,255,0.4);
+      border-radius: 12px;
+      background: rgba(40,40,80,0.6);
+      color: white;
+      margin-bottom: 24px;
+      transition: all 0.3s;
+    }
+    input:focus {
+      outline: none;
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 4px rgba(124,58,237,0.25);
+    }
+    button {
+      background: linear-gradient(90deg, #7c3aed, #a78bfa);
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      font-size: 1.3rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 25px rgba(124,58,237,0.4);
+    }
+    button:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(124,58,237,0.6); }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1 id="greeting">Merhaba! 👋</h1>
-    <p>Günlük işlerini buradan hallet kanka</p>
-  </header>
+  <div class="container">
+    <h1>Merhaba! 👋</h1>
+    <p>İsmini yaz</p>
 
-  <!-- İsim Girişi -->
-  <section id="name-section">
-    <h2>İsmini Yaz</h2>
-    <form id="name-form">
-      <input id="name-input" placeholder="Adın ne?" autofocus />
-      <button type="submit">Kaydet</button>
+    <form id="nameForm">
+      <input id="nameInput" placeholder="Adın ne kanka?" autofocus required />
+      <button type="submit">Devam Et →</button>
     </form>
-  </section>
-
-  <!-- Saat & Tarih -->
-  <section>
-    <div id="clock">--:--:--</div>
-    <div id="date">Yükleniyor...</div>
-  </section>
-
-  <!-- Takvim -->
-  <section>
-    <h2>Takvim</h2>
-    <div id="calendar"></div>
-  </section>
-
-  <!-- Hesap Makinesi -->
-  <section>
-    <h2>Hesap Makinesi</h2>
-    <div id="calculator">
-      <div id="display">0</div>
-      <button class="btn" onclick="clearDisplay()">C</button>
-      <button class="btn" onclick="appendToDisplay('(')">(</button>
-      <button class="btn" onclick="appendToDisplay(')')">)</button>
-      <button class="btn-operator" onclick="appendToDisplay('/')">/</button>
-
-      <button class="btn" onclick="appendToDisplay('7')">7</button>
-      <button class="btn" onclick="appendToDisplay('8')">8</button>
-      <button class="btn" onclick="appendToDisplay('9')">9</button>
-      <button class="btn-operator" onclick="appendToDisplay('*')">×</button>
-
-      <button class="btn" onclick="appendToDisplay('4')">4</button>
-      <button class="btn" onclick="appendToDisplay('5')">5</button>
-      <button class="btn" onclick="appendToDisplay('6')">6</button>
-      <button class="btn-operator" onclick="appendToDisplay('-')">-</button>
-
-      <button class="btn" onclick="appendToDisplay('1')">1</button>
-      <button class="btn" onclick="appendToDisplay('2')">2</button>
-      <button class="btn" onclick="appendToDisplay('3')">3</button>
-      <button class="btn-operator" onclick="appendToDisplay('+')">+</button>
-
-      <button class="btn" onclick="appendToDisplay('0')">0</button>
-      <button class="btn" onclick="appendToDisplay('.')">.</button>
-      <button class="btn-equal" onclick="calculate()">=</button>
-    </div>
-  </section>
-
-  <!-- Basit Fatura Hesaplama -->
-  <section>
-    <h2>Fatura / Hesap Hesapla</h2>
-    <label>Tutar (TL): <input type="number" id="amount" value="0" step="0.01"></label><br>
-    <label>KDV (%): <input type="number" id="kdv" value="20" step="1"></label><br>
-    <button onclick="hesaplaFatura()">Hesapla</button>
-    <p id="fatura-sonuc"></p>
-  </section>
-
-  <!-- Todo List -->
-  <section>
-    <h2>Yapılacaklar</h2>
-    <input id="todo-input" placeholder="Yeni iş ekle..." />
-    <button onclick="addTodo()">Ekle</button>
-    <ul id="todo-list"></ul>
-  </section>
+  </div>
 
   <script>
-    // ────────────── İSİM KAYDETME ──────────────
-    const greeting = document.getElementById('greeting');
-    const nameForm = document.getElementById('name-form');
-    const nameInput = document.getElementById('name-input');
-    const nameSection = document.getElementById('name-section');
+    const form = document.getElementById('nameForm');
+    const input = document.getElementById('nameInput');
 
-    let userName = localStorage.getItem('userName');
-
-    function updateGreeting() {
-      if (userName) {
-        greeting.textContent = `Merhaba ${userName} 👋`;
-        nameSection.style.display = 'none';
-      } else {
-        greeting.textContent = 'Merhaba! 👋';
-        nameSection.style.display = 'block';
-      }
-    }
-
-    nameForm.addEventListener('submit', e => {
+    form.addEventListener('submit', e => {
       e.preventDefault();
-      userName = nameInput.value.trim();
-      if (userName) {
-        localStorage.setItem('userName', userName);
-        updateGreeting();
+      const name = input.value.trim();
+      if (name) {
+        localStorage.setItem('userName', name);
+        window.location.href = 'dashboard.html';
       }
     });
 
-    updateGreeting();
-
-    // ────────────── GERÇEK SAAT & TARİH ──────────────
-    function updateClock() {
-      const now = new Date();
-      const time = now.toLocaleTimeString('tr-TR');
-      const dateStr = now.toLocaleDateString('tr-TR', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-      });
-      document.getElementById('clock').textContent = time;
-      document.getElementById('date').textContent = dateStr;
+    // Eğer isim zaten varsa direkt dashboard'a yönlendir
+    if (localStorage.getItem('userName')) {
+      window.location.href = 'dashboard.html';
     }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // ────────────── TAKVİM ──────────────
-    function renderCalendar() {
-      const calendar = document.getElementById('calendar');
-      calendar.innerHTML = '';
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = now.getMonth();
-
-      // Gün isimleri
-      ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'].forEach(day => {
-        const div = document.createElement('div');
-        div.className = 'day-name';
-        div.textContent = day;
-        calendar.appendChild(div);
-      });
-
-      // Önceki ayın boş günleri
-      const firstDay = new Date(year, month, 1).getDay() || 7; // Pazar 0 → 7 yap
-      for (let i = 1; i < firstDay; i++) {
-        calendar.appendChild(document.createElement('div'));
-      }
-
-      // Günler
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      for (let d = 1; d <= daysInMonth; d++) {
-        const div = document.createElement('div');
-        div.className = 'day';
-        div.textContent = d;
-        if (d === now.getDate() && month === now.getMonth() && year === now.getFullYear()) {
-          div.classList.add('today');
-        }
-        calendar.appendChild(div);
-      }
-    }
-    renderCalendar();
-
-    // ────────────── HESAP MAKİNESİ ──────────────
-    let display = document.getElementById('display');
-
-    function appendToDisplay(value) {
-      if (display.innerText === '0') display.innerText = value;
-      else display.innerText += value;
-    }
-
-    function clearDisplay() {
-      display.innerText = '0';
-    }
-
-    function calculate() {
-      try {
-        display.innerText = eval(display.innerText) || '0';
-      } catch {
-        display.innerText = 'Hata!';
-      }
-    }
-
-    // ────────────── FATURA HESAPLAMA ──────────────
-    function hesaplaFatura() {
-      const tutar = parseFloat(document.getElementById('amount').value) || 0;
-      const kdvOran = parseFloat(document.getElementById('kdv').value) || 0;
-      const kdv = tutar * (kdvOran / 100);
-      const toplam = tutar + kdv;
-
-      document.getElementById('fatura-sonuc').innerHTML = `
-        Ara Toplam: ${tutar.toFixed(2)} TL<br>
-        KDV (${kdvOran}%): ${kdv.toFixed(2)} TL<br>
-        <strong>Genel Toplam: ${toplam.toFixed(2)} TL</strong>
-      `;
-    }
-
-    // ────────────── TODO LİST ──────────────
-    const todoInput = document.getElementById('todo-input');
-    const todoList = document.getElementById('todo-list');
-
-    function loadTodos() {
-      const todos = JSON.parse(localStorage.getItem('todos')) || [];
-      todoList.innerHTML = '';
-      todos.forEach((text, index) => {
-        const li = document.createElement('li');
-        li.innerHTML = `${text} <button onclick="deleteTodo(${index})">Sil</button>`;
-        todoList.appendChild(li);
-      });
-    }
-
-    function addTodo() {
-      const text = todoInput.value.trim();
-      if (!text) return;
-      const todos = JSON.parse(localStorage.getItem('todos')) || [];
-      todos.push(text);
-      localStorage.setItem('todos', JSON.stringify(todos));
-      todoInput.value = '';
-      loadTodos();
-    }
-
-    function deleteTodo(index) {
-      const todos = JSON.parse(localStorage.getItem('todos')) || [];
-      todos.splice(index, 1);
-      localStorage.setItem('todos', JSON.stringify(todos));
-      loadTodos();
-    }
-
-    loadTodos();
   </script>
+
 </body>
 </html>
