@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rüzgar'ın Paneli</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      color: #e0e0ff;
+      min-height: 100vh;
+      padding: 30px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    h1 {
+      font-size: 3.5rem;
+      background: linear-gradient(90deg, #c084fc, #a78bfa, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .subtitle { color: #b0b0ff; font-size: 1.4rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .card {
+      background: rgba(35, 35, 70, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 24px;
+      border: 1px solid rgba(120,100,255,0.18);
+      transition: all 0.35s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 50px rgba(90,60,230,0.35);
+      border-color: rgba(124,58,237,0.5);
+    }
+    .card h2 {
+      color: #c4b5fd;
+      margin-bottom: 16px;
+      font-size: 1.5rem;
+      border-bottom: 2px solid rgba(124,58,237,0.3);
+      padding-bottom: 8px;
+    }
+
+    /* Saat */
+    #clock { font-size: 3.8rem; font-weight: 600; text-align: center; color: #e9d5ff; letter-spacing: 4px; }
+    #date { text-align: center; font-size: 1.4rem; color: #a0d0ff; margin-top: 8px; }
+
+    /* Takvim */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      text-align: center;
+    }
+    .cal-header { color: #ffcc00; font-weight: bold; font-size: 1.1rem; }
+    .cal-day {
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(50,50,90,0.5);
+      transition: all 0.2s;
+    }
+    .cal-day.today {
+      background: linear-gradient(135deg, #ec4899, #f43f5e);
+      color: white;
+      font-weight: bold;
+    }
+
+    /* Hesap makinesi + diğer inputlar */
+    input, button {
+      padding: 12px 16px;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      border: none;
+    }
+    input { background: rgba(40,40,80,0.7); color: white; width: 100%; margin: 8px 0; }
+    button {
+      background: linear-gradient(90deg, #7c3aed, #a78bfa);
+      color: white;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    button:hover { background: linear-gradient(90deg, #a78bfa, #c084fc); transform: scale(1.03); }
+
+    #calc-display { background: #0a0a1f; color: #d1ffcc; font-size: 2.4rem; text-align: right; padding: 16px; border-radius: 12px; margin-bottom: 12px; min-height: 60px; }
+
+    #todo-list li {
+      background: rgba(50,50,90,0.6);
+      padding: 12px 16px;
+      margin: 8px 0;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .delete-btn { background: #ef4444; padding: 6px 12px; font-size: 0.9rem; }
+
+    .motivation {
+      text-align: center;
+      font-size: 1.4rem;
+      font-style: italic;
+      color: #c4b5fd;
+      margin: 40px 0;
+      padding: 20px;
+      background: rgba(90,60,230,0.15);
+      border-radius: 16px;
+      border-left: 6px solid #a78bfa;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 id="greeting">Yükleniyor...</h1>
+    <div class="subtitle">Bugün ne yapıyoruz kanka?</div>
+  </header>
+
+  <div class="grid">
+
+    <!-- Saat & Tarih -->
+    <div class="card">
+      <h2><i class="fas fa-clock"></i> Saat</h2>
+      <div id="clock">--:--:--</div>
+      <div id="date">Yükleniyor...</div>
+    </div>
+
+    <!-- Takvim -->
+    <div class="card">
+      <h2><i class="far fa-calendar-alt"></i> Takvim</h2>
+      <div class="calendar-grid" id="calendar"></div>
+    </div>
+
+    <!-- Hesap Makinesi -->
+    <div class="card">
+      <h2><i class="fas fa-calculator"></i> Hesap Makinesi</h2>
+      <div id="calc-display">0</div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">
+        <button onclick="calcClear()">C</button>
+        <button onclick="calcAppend('(')">(</button>
+        <button onclick="calcAppend(')')">)</button>
+        <button onclick="calcAppend('/')">/</button>
+
+        <button onclick="calcAppend('7')">7</button>
+        <button onclick="calcAppend('8')">8</button>
+        <button onclick="calcAppend('9')">9</button>
+        <button onclick="calcAppend('*')">×</button>
+
+        <button onclick="calcAppend('4')">4</button>
+        <button onclick="calcAppend('5')">5</button>
+        <button onclick="calcAppend('6')">6</button>
+        <button onclick="calcAppend('-')">-</button>
+
+        <button onclick="calcAppend('1')">1</button>
+        <button onclick="calcAppend('2')">2</button>
+        <button onclick="calcAppend('3')">3</button>
+        <button onclick="calcAppend('+')">+</button>
+
+        <button onclick="calcAppend('0')">0</button>
+        <button onclick="calcAppend('.')">.</button>
+        <button onclick="calcEquals()">=</button>
+      </div>
+    </div>
+
+    <!-- Hızlı Notlar -->
+    <div class="card">
+      <h2><i class="fas fa-sticky-note"></i> Hızlı Not</h2>
+      <textarea id="quickNote" placeholder="Bugün aklına gelenleri yaz..." rows="6"></textarea>
+      <button onclick="saveNote()" style="margin-top:12px; width:100%;">Kaydet</button>
+    </div>
+
+    <!-- Todo List -->
+    <div class="card">
+      <h2><i class="fas fa-tasks"></i> Yapılacaklar</h2>
+      <input id="todoInput" placeholder="Yeni iş ekle..." />
+      <button onclick="addTodo()" style="margin-top:8px;">Ekle</button>
+      <ul id="todo-list" style="list-style:none; margin-top:16px;"></ul>
+    </div>
+
+    <!-- Motivasyon -->
+    <div class="card motivation" id="motivationQuote">
+      "Yükleniyor..."
+    </div>
+
+  </div>
+
+  <script>
+    // ────────────── İSİM ──────────────
+    const name = localStorage.getItem('userName') || 'Kanka';
+    document.getElementById('greeting').textContent = `Merhaba ${name} 👋`;
+
+    // ────────────── SAAT ──────────────
+    function updateTime() {
+      const now = new Date();
+      document.getElementById('clock').textContent = now.toLocaleTimeString('tr-TR');
+      document.getElementById('date').textContent = now.toLocaleDateString('tr-TR', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // ────────────── TAKVİM ──────────────
+    function renderCalendar() {
+      const cal = document.getElementById('calendar');
+      cal.innerHTML = '';
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = now.getMonth();
+
+      ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'].forEach(d => {
+        const div = document.createElement('div');
+        div.className = 'cal-header';
+        div.textContent = d;
+        cal.appendChild(div);
+      });
+
+      const first = new Date(y, m, 1).getDay() || 7;
+      for(let i=1; i<first; i++) cal.appendChild(document.createElement('div'));
+
+      const days = new Date(y, m+1, 0).getDate();
+      for(let d=1; d<=days; d++) {
+        const div = document.createElement('div');
+        div.className = 'cal-day';
+        div.textContent = d;
+        if(d === now.getDate()) div.classList.add('today');
+        cal.appendChild(div);
+      }
+    }
+    renderCalendar();
+
+    // ────────────── HESAP MAKİNESİ ──────────────
+    let calcDisplay = document.getElementById('calc-display');
+    function calcAppend(v) {
+      if(calcDisplay.textContent === '0' && !'+-*/.'.includes(v)) calcDisplay.textContent = v;
+      else calcDisplay.textContent += v;
+    }
+    function calcClear() { calcDisplay.textContent = '0'; }
+    function calcEquals() {
+      try { calcDisplay.textContent = eval(calcDisplay.textContent) || '0'; }
+      catch { calcDisplay.textContent = 'Hata'; }
+    }
+
+    // ────────────── NOT ──────────────
+    const noteArea = document.getElementById('quickNote');
+    noteArea.value = localStorage.getItem('quickNote') || '';
+    function saveNote() {
+      localStorage.setItem('quickNote', noteArea.value);
+      alert('Not kaydedildi!');
+    }
+
+    // ────────────── TODO ──────────────
+    const todoInput = document.getElementById('todoInput');
+    const todoList = document.getElementById('todo-list');
+
+    function loadTodos() {
+      const todos = JSON.parse(localStorage.getItem('todos') || '[]');
+      todoList.innerHTML = '';
+      todos.forEach((t, i) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${t} <button class="delete-btn" onclick="deleteTodo(${i})">Sil</button>`;
+        todoList.appendChild(li);
+      });
+    }
+
+    function addTodo() {
+      const val = todoInput.value.trim();
+      if(!val) return;
+      const todos = JSON.parse(localStorage.getItem('todos') || '[]');
+      todos.push(val);
+      localStorage.setItem('todos', JSON.stringify(todos));
+      todoInput.value = '';
+      loadTodos();
+    }
+
+    function deleteTodo(i) {
+      const todos = JSON.parse(localStorage.getItem('todos') || '[]');
+      todos.splice(i, 1);
+      localStorage.setItem('todos', JSON.stringify(todos));
+      loadTodos();
+    }
+
+    loadTodos();
+
+    // ────────────── MOTİVASYON CÜMLELERİ ──────────────
+    const quotes = [
+      "Bugün yine efsane olacağız kanka 💪",
+      "Küçük adımlar büyük zaferlere götürür",
+      "Senin enerjin her şeyi değiştirir 🔥",
+      "Durmak yok, yola devam!",
+      "Bugün yaptıkların yarınki seni şekillendiriyor",
+      "Kendine inan, gerisi gelir",
+      "Zorluklar seni daha güçlü yapar"
+    ];
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('motivationQuote').textContent = `"${randomQuote}"`;
+  </script>
+
+</body>
+</html>
