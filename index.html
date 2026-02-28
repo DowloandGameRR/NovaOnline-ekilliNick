@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>YouTube → MP3 İndir - ytmp3.sc</title>
 
-  <!-- Reklam script'leri head'e (async ekledim, blocking olmasın) -->
+  <!-- Reklam script'leri head'e (async) -->
   <script async src="https://pl28817110.effectivegatecpm.com/99/20/c9/9920c96a2eb8a55c4b75e3025049eeee.js"></script>
 
   <style>
@@ -14,13 +14,13 @@
       background: linear-gradient(135deg, #0f001f, #1a0033);
       color: #e0d0ff;
       margin: 0;
-      padding: 20px 160px 20px 160px; /* Sol ve sağdan sidebar için boşluk bıraktım */
+      padding: 10px 160px 20px 160px; /* Sol-sağ sidebar için geniş boşluk */
       min-height: 100vh;
       position: relative;
     }
     h1 {
-      font-size: 2.8rem;
-      margin: 40px 0 20px;
+      font-size: 2.5rem;
+      margin: 20px 0 10px;
       color: #b19cd9;
       text-shadow: 0 0 10px #9f7acd;
       text-align: center;
@@ -28,25 +28,25 @@
     .container {
       background: rgba(30, 20, 60, 0.75);
       border-radius: 16px;
-      padding: 35px;
+      padding: 25px;
       width: 100%;
-      max-width: 580px;
+      max-width: 600px;
       box-shadow: 0 12px 35px rgba(0,0,0,0.6);
       border: 1px solid #7c5ab5;
       text-align: center;
-      margin: 20px auto;
-      position: relative;
+      margin: 15px auto;
       z-index: 1;
+      position: relative;
     }
     input {
       width: 100%;
-      padding: 14px;
-      font-size: 1.15rem;
+      padding: 12px;
+      font-size: 1.1rem;
       border: 2px solid #6b5b95;
       border-radius: 10px;
       background: #0f0820;
       color: #fff;
-      margin: 20px 0;
+      margin: 15px 0;
     }
     input:focus {
       border-color: #b19cd9;
@@ -57,8 +57,8 @@
       background: linear-gradient(90deg, #7c5ab5, #b19cd9);
       color: white;
       border: none;
-      padding: 14px 40px;
-      font-size: 1.25rem;
+      padding: 12px 35px;
+      font-size: 1.2rem;
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.3s;
@@ -68,58 +68,92 @@
       box-shadow: 0 8px 20px rgba(177,156,217,0.5);
     }
     #status {
-      margin: 25px 0;
-      font-size: 1.2rem;
-      min-height: 100px;
-      line-height: 1.5;
+      margin: 20px 0;
+      font-size: 1.1rem;
+      min-height: 80px;
+      line-height: 1.4;
     }
     #thumbnail {
       max-width: 100%;
       border-radius: 10px;
-      margin: 20px 0;
+      margin: 15px 0;
       display: none;
       box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     }
-    small { color: #aaa; font-size: 0.95rem; line-height: 1.4; }
+    small { color: #aaa; font-size: 0.9rem; line-height: 1.3; }
 
-    /* Reklam stilleri - yanlara ve etrafa yayılmış */
+    /* Reklam stilleri – ilk ekranda maksimum görünürlük */
     .ad-top {
       text-align: center;
-      margin: 10px auto 30px;
+      margin: 10px auto 20px;
       max-width: 728px;
     }
-    .ad-bottom {
+    .ad-middle {
       text-align: center;
-      margin: 40px auto 20px;
-      max-width: 728px;
+      margin: 20px auto;
+      max-width: 468px;
     }
     .sidebar-left {
       position: fixed;
-      top: 150px;
-      left: 20px;
+      top: 80px;
+      left: 10px;
       z-index: 999;
       width: 160px;
     }
     .sidebar-right {
       position: fixed;
-      top: 150px;
-      right: 20px;
+      top: 80px;
+      right: 10px;
       z-index: 999;
       width: 160px;
     }
     .ad-floating {
-      margin: 40px auto;
+      margin: 20px auto;
       text-align: center;
     }
-    @media (max-width: 900px) {
-      body { padding: 20px; }
-      .sidebar-left, .sidebar-right { display: none; } /* Mobilde yan reklamları gizle */
+    .ad-bottom {
+      text-align: center;
+      margin: 30px auto 20px;
+      max-width: 728px;
+    }
+    @media (max-width: 1000px) {
+      body { padding: 10px; }
+      .sidebar-left, .sidebar-right { display: none; } /* Mobilde yanlar gizli */
+      .ad-top, .ad-middle { max-width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Üst banner reklam (728x90) -->
+  <!-- Sol sidebar (ilk ekranda görünür) -->
+  <div class="sidebar-left">
+    <script> 
+      atOptions = { 
+        'key' : '67de96499375b6d93ef1ad15a4f124de', 
+        'format' : 'iframe', 
+        'height' : 300, 
+        'width' : 160, 
+        'params' : {} 
+      }; 
+    </script>
+    <script src="https://www.highperformanceformat.com/67de96499375b6d93ef1ad15a4f124de/invoke.js"></script>
+  </div>
+
+  <!-- Sağ sidebar (ilk ekranda görünür – büyük olan) -->
+  <div class="sidebar-right">
+    <script> 
+      atOptions = { 
+        'key' : 'ed730f2286db804ed2df887bffdcf7d7', 
+        'format' : 'iframe', 
+        'height' : 600, 
+        'width' : 160, 
+        'params' : {} 
+      }; 
+    </script>
+    <script src="https://www.highperformanceformat.com/ed730f2286db804ed2df887bffdcf7d7/invoke.js"></script>
+  </div>
+
+  <!-- En üst banner (728x90 – sayfanın en başında) -->
   <div class="ad-top">
     <script> 
       atOptions = { 
@@ -144,7 +178,7 @@
     </small>
   </div>
 
-  <!-- Orta reklam (300x250) -->
+  <!-- Orta üst reklam (300x250 – ana içeriğin hemen üstünde/yanında görünür) -->
   <div class="ad-floating">
     <script> 
       atOptions = { 
@@ -158,42 +192,14 @@
     <script src="https://www.highperformanceformat.com/4f7596b43d9fd21435f11423b5f015ab/invoke.js"></script>
   </div>
 
-  <!-- Sol sidebar reklam (160x300) -->
-  <div class="sidebar-left">
-    <script> 
-      atOptions = { 
-        'key' : '67de96499375b6d93ef1ad15a4f124de', 
-        'format' : 'iframe', 
-        'height' : 300, 
-        'width' : 160, 
-        'params' : {} 
-      }; 
-    </script>
-    <script src="https://www.highperformanceformat.com/67de96499375b6d93ef1ad15a4f124de/invoke.js"></script>
-  </div>
-
-  <!-- Sağ sidebar reklam (160x600) -->
-  <div class="sidebar-right">
-    <script> 
-      atOptions = { 
-        'key' : 'ed730f2286db804ed2df887bffdcf7d7', 
-        'format' : 'iframe', 
-        'height' : 600, 
-        'width' : 160, 
-        'params' : {} 
-      }; 
-    </script>
-    <script src="https://www.highperformanceformat.com/ed730f2286db804ed2df887bffdcf7d7/invoke.js"></script>
-  </div>
-
-  <!-- Alt banner reklam (468x60) -->
-  <div class="ad-bottom">
+  <!-- Orta banner (468x60) -->
+  <div class="ad-middle">
     <script async="async" data-cfasync="false" src="https://pl28817197.effectivegatecpm.com/143d8a3e8a6885d952b37b143814e17f/invoke.js"></script>
     <div id="container-143d8a3e8a6885d952b37b143814e17f"></div>
   </div>
 
-  <!-- Alt başka banner (60x468) -->
-  <div class="ad-bottom">
+  <!-- Başka orta banner (60x468) -->
+  <div class="ad-middle">
     <script> 
       atOptions = { 
         'key' : 'ee518bebf1bf31ed6691728289c153ce', 
@@ -206,7 +212,7 @@
     <script src="https://www.highperformanceformat.com/ee518bebf1bf31ed6691728289c153ce/invoke.js"></script>
   </div>
 
-  <!-- Mobil banner (320x50) -->
+  <!-- Alt banner'lar (mobil ve footer için) -->
   <div class="ad-bottom">
     <script> 
       atOptions = { 
@@ -220,10 +226,10 @@
     <script src="https://www.highperformanceformat.com/303d6d7bba1e4a1fb25db47a3f3e0ff9/invoke.js"></script>
   </div>
 
-  <!-- Diğer etkili script'ler body sonuna -->
+  <!-- Son etkili script'ler body sonuna -->
   <script src="https://pl28817221.effectivegatecpm.com/c0/e3/d9/c0e3d94a3f9fc1f02d305ea24f601067.js"></script>
 
-  <!-- effectivegatecpm linki iframe olarak alt kısımda -->
+  <!-- effectivegatecpm iframe (alt kısımda) -->
   <div class="ad-bottom">
     <iframe src="https://www.effectivegatecpm.com/hvf6ymwpfy?key=a28112b550e9b608f97e203007f53370" 
             width="728" height="90" frameborder="0" scrolling="no" style="max-width:100%;"></iframe>
