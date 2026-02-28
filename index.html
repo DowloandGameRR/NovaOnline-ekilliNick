@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>YouTube → MP3 İndir (Ücretsiz - Anahtarsız)</title>
+  <title>YouTube → MP3 İndir - ytmp3.sc</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,6 +15,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
     }
     h1 {
       font-size: 2.8rem;
@@ -71,81 +72,74 @@
       border-radius: 10px;
       margin: 20px 0;
       display: none;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     }
-    .services {
-      margin-top: 20px;
-      font-size: 0.95rem;
-      color: #aaa;
-    }
+    small { color: #aaa; font-size: 0.95rem; line-height: 1.4; }
   </style>
 </head>
 <body>
 
   <h1>YouTube → MP3 İndir</h1>
   <div class="container">
-    <input id="url" placeholder="YouTube linkini buraya yapıştır..." autofocus />
-    <button onclick="convertAndOpen()">MP3'e Dönüştür & İndir</button>
+    <input id="url" placeholder="YouTube linkini buraya yapıştır (ör: https://youtu.be/...)" autofocus />
+    <button onclick="indirMP3()">MP3 Olarak İndir (ytmp3.sc)</button>
 
     <img id="thumbnail" alt="Video Thumbnail" />
 
-    <div id="status">Link yapıştırıp butona bas...</div>
+    <div id="status">Link yapıştır ve butona bas...</div>
 
-    <div class="services">
-      <small>Şu an çalışan servisler (anahtarsız): ytmp3.nu, onlymp3.to, yt1s.com<br>
-      Biri çalışmazsa diğerini dene – bunlar değişebilir.</small>
-    </div>
+    <small style="margin-top:20px; display:block;">
+      Bu araç seni https://ytmp3.sc/ sitesine yönlendirir.<br>
+      Orada otomatik dönüştürme başlar, "Download" butonuna basıp MP3'ü alabilirsin.<br>
+      (Site ücretsiz, anahtar istemez – 2026'da hâlâ çalışıyor)
+    </small>
   </div>
 
   <script>
     function getVideoId(url) {
-      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^"&?\/\s]{11})/i);
+      const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"#&?\/\s]{11})/i;
+      const match = url.match(regex);
       return match ? match[1] : null;
     }
 
-    function convertAndOpen() {
+    function indirMP3() {
       const url = document.getElementById('url').value.trim();
       const status = document.getElementById('status');
       const thumb = document.getElementById('thumbnail');
 
       if (!url) {
-        status.textContent = 'Link gir lütfen!';
+        status.textContent = 'Link gir lütfen kanka!';
         status.style.color = '#ff6b6b';
         return;
       }
 
-      const id = getVideoId(url);
-      if (!id) {
-        status.textContent = 'Geçersiz YouTube linki görünüyor...';
+      const videoId = getVideoId(url);
+      if (!videoId) {
+        status.textContent = 'Geçersiz YouTube linki... Doğru formatta gir.';
         status.style.color = '#ff6b6b';
         return;
       }
 
-      thumb.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+      // Thumbnail göster
+      thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
       thumb.style.display = 'block';
 
-      status.textContent = 'Hazırlanıyor... Servise yönlendiriliyorsun!';
+      status.textContent = 'Hazırlanıyor... ytmp3.sc'ye yönlendiriliyorsun!';
       status.style.color = '#ffe66d';
 
-      // 2026 Şubat itibarıyla anahtarsız çalışan bazı servisler
-      const services = [
-        `https://ytmp3.nu/${id}`,
-        `https://onlymp3.to/${id}`,
-        `https://yt1s.com/?v=${id}`,
-        `https://vevioz.com/@api/button/mp3/${id}`
-      ];
+      // ytmp3.sc'ye yönlendir (site kendi input'una URL'yi otomatik almıyor, ama kullanıcı kolayca yapıştırabilir)
+      // Direkt parametre desteği yok gibi görünüyor, o yüzden basit yönlendirme + talimat
+      const servisUrl = 'https://ytmp3.sc/';
 
-      // İlk çalışan gibi görüneni aç (hepsini denemek yerine sırayla)
-      let opened = false;
-      services.forEach((link, index) => {
-        setTimeout(() => {
-          if (!opened) {
-            window.open(link, '_blank');
-            opened = true;
-            status.innerHTML = `Servis açıldı!<br>Oradan "Download" veya "Convert" butonuna basıp MP3'ü alabilirsin.<br><small>(Eğer açılmazsa başka tarayıcı dene veya VPN kullan)</small>`;
-            status.style.color = '#95ff9e';
-          }
-        }, index * 1800);  // sırayla dene ama ilk açılınca dur
-      });
+      setTimeout(() => {
+        window.open(servisUrl, '_blank');
+        status.innerHTML = `Site açıldı!<br><br>
+          1. Açılan sitede YouTube linkini yapıştır.<br>
+          2. "Convert" butonuna bas.<br>
+          3. Dönüşüm bitince "Download" butonuna tıkla ve MP3'ü indir.<br><br>
+          Kolay gelsin! 🔥`;
+        status.style.color = '#95ff9e';
+      }, 1200);
     }
   </script>
 
