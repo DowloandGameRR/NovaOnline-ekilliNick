@@ -1,0 +1,62 @@
+services:
+  - name: Günlük Araçlar
+    items:
+      - name: Google
+        url: https://google.com
+        icon: fab fa-google
+        subtitle: Arama motoru
+
+      - name: YouTube
+        url: https://youtube.com
+        icon: fab fa-youtube
+        subtitle: Videolar
+
+      - name: ChatGPT
+        url: https://chat.openai.com
+        icon: fas fa-robot
+        subtitle: AI sohbet
+
+  - name: Banka & Finans
+    items:
+      - name: Ziraat Bankası
+        url: https://www.ziraatbank.com.tr
+        icon: fas fa-university
+
+      - name: Papara
+        url: https://www.papara.com
+        icon: fas fa-wallet
+
+  - name: Alışveriş & Yemek
+    items:
+      - name: Getir
+        url: https://getir.com
+        icon: fas fa-shopping-cart
+
+      - name: Trendyol
+        url: https://trendyol.com
+        icon: fas fa-shopping-bag
+
+      - name: Yemeksepeti
+        url: https://yemeksepeti.com
+        icon: fas fa-utensils
+
+  - name: Eğlence
+    items:
+      - name: Netflix
+        url: https://netflix.com
+        icon: fab fa-netflix
+
+      - name: Spotify
+        url: https://open.spotify.com
+        icon: fab fa-spotify
+
+  - name: Diğer
+    items:
+      - name: Hava Durumu (Ankara)
+        url: https://mgm.gov.tr/tahmin/il-ve-ilceler.aspx?il=Ankara
+        icon: fas fa-cloud-sun
+        subtitle: Etimesgut için bak
+
+      - name: Not Alma (Notion)
+        url: https://notion.so
+        icon: fas fa-sticky-note
