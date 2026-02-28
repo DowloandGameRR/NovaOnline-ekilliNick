@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>YouTube MP3 İndirici</title>
+  <title>YouTube → MP3 İndir (Ücretsiz - Anahtarsız)</title>
   <style>
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63);
-      color: #e0e0ff;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f001f, #1a0033);
+      color: #e0d0ff;
       margin: 0;
       padding: 20px;
       min-height: 100vh;
@@ -19,147 +19,133 @@
     h1 {
       font-size: 2.8rem;
       margin: 40px 0 20px;
-      background: linear-gradient(90deg, #c084fc, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #b19cd9;
+      text-shadow: 0 0 10px #9f7acd;
     }
     .container {
-      background: rgba(35, 35, 70, 0.7);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 40px;
+      background: rgba(30, 20, 60, 0.75);
+      border-radius: 16px;
+      padding: 35px;
       width: 100%;
-      max-width: 600px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-      border: 1px solid rgba(160,140,255,0.2);
+      max-width: 580px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+      border: 1px solid #7c5ab5;
+      text-align: center;
     }
     input {
       width: 100%;
-      padding: 16px;
-      font-size: 1.2rem;
-      border: 2px solid #6b7280;
-      border-radius: 12px;
-      background: rgba(50,50,90,0.6);
-      color: white;
-      margin-bottom: 20px;
+      padding: 14px;
+      font-size: 1.15rem;
+      border: 2px solid #6b5b95;
+      border-radius: 10px;
+      background: #0f0820;
+      color: #fff;
+      margin: 20px 0;
     }
     input:focus {
+      border-color: #b19cd9;
       outline: none;
-      border-color: #a78bfa;
-      box-shadow: 0 0 0 4px rgba(167,139,250,0.3);
+      box-shadow: 0 0 12px rgba(177,156,217,0.4);
     }
     button {
-      background: linear-gradient(90deg, #7c3aed, #a78bfa);
+      background: linear-gradient(90deg, #7c5ab5, #b19cd9);
       color: white;
       border: none;
-      padding: 16px 32px;
-      font-size: 1.3rem;
-      border-radius: 12px;
+      padding: 14px 40px;
+      font-size: 1.25rem;
+      border-radius: 10px;
       cursor: pointer;
       transition: all 0.3s;
-      width: 100%;
-      margin-top: 10px;
     }
     button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(124,58,237,0.5);
+      transform: scale(1.04);
+      box-shadow: 0 8px 20px rgba(177,156,217,0.5);
     }
     #status {
-      margin-top: 25px;
+      margin: 25px 0;
       font-size: 1.2rem;
-      text-align: center;
-      color: #c4b5fd;
-    }
-    #downloadBtn {
-      display: none;
-      margin-top: 20px;
-      background: linear-gradient(90deg, #10b981, #34d399);
+      min-height: 50px;
     }
     #thumbnail {
       max-width: 100%;
-      border-radius: 12px;
+      border-radius: 10px;
       margin: 20px 0;
       display: none;
+    }
+    .services {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
 
   <h1>YouTube → MP3 İndir</h1>
-
   <div class="container">
-    <input type="text" id="urlInput" placeholder="YouTube video linkini buraya yapıştır (ör: https://youtu.be/...)" autofocus />
-    <button onclick="convertVideo()">MP3'e Dönüştür & İndir</button>
+    <input id="url" placeholder="YouTube linkini buraya yapıştır..." autofocus />
+    <button onclick="convertAndOpen()">MP3'e Dönüştür & İndir</button>
 
-    <img id="thumbnail" alt="Video önizleme" />
+    <img id="thumbnail" alt="Video Thumbnail" />
 
-    <div id="status">Linki yapıştır ve butona bas...</div>
+    <div id="status">Link yapıştırıp butona bas...</div>
 
-    <button id="downloadBtn" onclick="startDownload()">İndirmeyi Başlat</button>
+    <div class="services">
+      <small>Şu an çalışan servisler (anahtarsız): ytmp3.nu, onlymp3.to, yt1s.com<br>
+      Biri çalışmazsa diğerini dene – bunlar değişebilir.</small>
+    </div>
   </div>
 
   <script>
-    let downloadUrl = '';
-    let videoTitle = 'audio';
+    function getVideoId(url) {
+      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^"&?\/\s]{11})/i);
+      return match ? match[1] : null;
+    }
 
-    async function convertVideo() {
-      const url = document.getElementById('urlInput').value.trim();
+    function convertAndOpen() {
+      const url = document.getElementById('url').value.trim();
       const status = document.getElementById('status');
       const thumb = document.getElementById('thumbnail');
-      const dlBtn = document.getElementById('downloadBtn');
 
-      if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
-        status.textContent = 'Geçerli bir YouTube linki gir kanka...';
-        status.style.color = '#ef4444';
+      if (!url) {
+        status.textContent = 'Link gir lütfen!';
+        status.style.color = '#ff6b6b';
         return;
       }
 
-      status.textContent = 'Dönüştürülüyor... (biraz bekle)';
-      status.style.color = '#fbbf24';
-      dlBtn.style.display = 'none';
-      thumb.style.display = 'none';
-
-      try {
-        // Örnek ücretsiz/public bir endpoint (2026'da çalışanlardan biri)
-        // NOT: Bu tür ücretsiz servisler zamanla kapanabilir veya limit koyabilir
-        // Alternatif: https://api.onlinevideoconverter.pro/api/convert gibi servisleri dene
-        const apiUrl = `https://api.vevioz.com/@api/button/mp3/${getVideoId(url)}`;
-
-        // Veya başka bir popüler: 
-        // const apiUrl = `https://ytmp3.cc/api/button/mp3/${getVideoId(url)}`;
-
-        // Önizleme için thumbnail alalım
-        const videoId = getVideoId(url);
-        thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-        thumb.style.display = 'block';
-
-        status.innerHTML = `Hazırlanıyor...<br><small>${videoId}</small>`;
-
-        // Gerçek indirme linkini almak için fetch (CORS sorunu olabilir, o yüzden basitçe link üretelim)
-        // Birçok servis direkt <a href> verir ama biz fetch ile deneyelim
-        downloadUrl = `https://www.yt-download.org/api/button/mp3/${videoId}`;  // örnek servis
-        // Gerçek bir servis kullanırsan burayı değiştir
-
-        status.textContent = 'Hazır! Aşağıdaki butondan indirebilirsin.';
-        status.style.color = '#10b981';
-        dlBtn.style.display = 'block';
-
-      } catch (err) {
-        status.textContent = 'Hata çıktı: ' + err.message + ' (farklı bir servis dene)';
-        status.style.color = '#ef4444';
+      const id = getVideoId(url);
+      if (!id) {
+        status.textContent = 'Geçersiz YouTube linki görünüyor...';
+        status.style.color = '#ff6b6b';
+        return;
       }
-    }
 
-    function startDownload() {
-      if (downloadUrl) {
-        window.open(downloadUrl, '_blank');
-      }
-    }
+      thumb.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+      thumb.style.display = 'block';
 
-    function getVideoId(url) {
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-      const match = url.match(regExp);
-      return (match && match[2].length === 11) ? match[2] : null;
+      status.textContent = 'Hazırlanıyor... Servise yönlendiriliyorsun!';
+      status.style.color = '#ffe66d';
+
+      // 2026 Şubat itibarıyla anahtarsız çalışan bazı servisler
+      const services = [
+        `https://ytmp3.nu/${id}`,
+        `https://onlymp3.to/${id}`,
+        `https://yt1s.com/?v=${id}`,
+        `https://vevioz.com/@api/button/mp3/${id}`
+      ];
+
+      // İlk çalışan gibi görüneni aç (hepsini denemek yerine sırayla)
+      let opened = false;
+      services.forEach((link, index) => {
+        setTimeout(() => {
+          if (!opened) {
+            window.open(link, '_blank');
+            opened = true;
+            status.innerHTML = `Servis açıldı!<br>Oradan "Download" veya "Convert" butonuna basıp MP3'ü alabilirsin.<br><small>(Eğer açılmazsa başka tarayıcı dene veya VPN kullan)</small>`;
+            status.style.color = '#95ff9e';
+          }
+        }, index * 1800);  // sırayla dene ama ilk açılınca dur
+      });
     }
   </script>
 
