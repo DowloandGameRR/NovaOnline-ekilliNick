@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YouTube → MP3 İndir (Ücretsiz - Anahtarsız)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f001f, #1a0033);
+      color: #e0d0ff;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      font-size: 2.8rem;
+      margin: 40px 0 20px;
+      color: #b19cd9;
+      text-shadow: 0 0 10px #9f7acd;
+    }
+    .container {
+      background: rgba(30, 20, 60, 0.75);
+      border-radius: 16px;
+      padding: 35px;
+      width: 100%;
+      max-width: 580px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+      border: 1px solid #7c5ab5;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.15rem;
+      border: 2px solid #6b5b95;
+      border-radius: 10px;
+      background: #0f0820;
+      color: #fff;
+      margin: 20px 0;
+    }
+    input:focus {
+      border-color: #b19cd9;
+      outline: none;
+      box-shadow: 0 0 12px rgba(177,156,217,0.4);
+    }
+    button {
+      background: linear-gradient(90deg, #7c5ab5, #b19cd9);
+      color: white;
+      border: none;
+      padding: 14px 40px;
+      font-size: 1.25rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    button:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 20px rgba(177,156,217,0.5);
+    }
+    #status {
+      margin: 25px 0;
+      font-size: 1.2rem;
+      min-height: 50px;
+    }
+    #thumbnail {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 20px 0;
+      display: none;
+    }
+    .services {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>YouTube → MP3 İndir</h1>
+  <div class="container">
+    <input id="url" placeholder="YouTube linkini buraya yapıştır..." autofocus />
+    <button onclick="convertAndOpen()">MP3'e Dönüştür & İndir</button>
+
+    <img id="thumbnail" alt="Video Thumbnail" />
+
+    <div id="status">Link yapıştırıp butona bas...</div>
+
+    <div class="services">
+      <small>Şu an çalışan servisler (anahtarsız): ytmp3.nu, onlymp3.to, yt1s.com<br>
+      Biri çalışmazsa diğerini dene – bunlar değişebilir.</small>
+    </div>
+  </div>
+
+  <script>
+    function getVideoId(url) {
+      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^"&?\/\s]{11})/i);
+      return match ? match[1] : null;
+    }
+
+    function convertAndOpen() {
+      const url = document.getElementById('url').value.trim();
+      const status = document.getElementById('status');
+      const thumb = document.getElementById('thumbnail');
+
+      if (!url) {
+        status.textContent = 'Link gir lütfen!';
+        status.style.color = '#ff6b6b';
+        return;
+      }
+
+      const id = getVideoId(url);
+      if (!id) {
+        status.textContent = 'Geçersiz YouTube linki görünüyor...';
+        status.style.color = '#ff6b6b';
+        return;
+      }
+
+      thumb.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+      thumb.style.display = 'block';
+
+      status.textContent = 'Hazırlanıyor... Servise yönlendiriliyorsun!';
+      status.style.color = '#ffe66d';
+
+      // 2026 Şubat itibarıyla anahtarsız çalışan bazı servisler
+      const services = [
+        `https://ytmp3.nu/${id}`,
+        `https://onlymp3.to/${id}`,
+        `https://yt1s.com/?v=${id}`,
+        `https://vevioz.com/@api/button/mp3/${id}`
+      ];
+
+      // İlk çalışan gibi görüneni aç (hepsini denemek yerine sırayla)
+      let opened = false;
+      services.forEach((link, index) => {
+        setTimeout(() => {
+          if (!opened) {
+            window.open(link, '_blank');
+            opened = true;
+            status.innerHTML = `Servis açıldı!<br>Oradan "Download" veya "Convert" butonuna basıp MP3'ü alabilirsin.<br><small>(Eğer açılmazsa başka tarayıcı dene veya VPN kullan)</small>`;
+            status.style.color = '#95ff9e';
+          }
+        }, index * 1800);  // sırayla dene ama ilk açılınca dur
+      });
+    }
+  </script>
+
+</body>
+</html>
